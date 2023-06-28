@@ -12,6 +12,7 @@ import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
 import superjson from "superjson";
 import { ZodError } from "zod";
+import { isAdminEmail } from "~/hooks/useAdmin";
 import { getServerAuthSession } from "~/server/auth";
 import { prisma } from "~/server/db";
 
@@ -128,3 +129,17 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
  * @see https://trpc.io/docs/procedures
  */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
+
+/**
+ * Admin procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to logged in users with admin privileges, use this.
+ */
+const isAdmin = t.middleware(({ ctx, next }) => {
+  if (!isAdminEmail(ctx.session?.user?.email)) {
+    throw new TRPCError({ code: "UNAUTHORIZED" });
+  }
+  return next();
+});
+
+export const adminProcedure = t.procedure.use(enforceUserIsAuthed).use(isAdmin);

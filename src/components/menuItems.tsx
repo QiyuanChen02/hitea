@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 import {
   type MilkTeaCategoryType,
   type TeaType,
@@ -37,8 +38,12 @@ const MenuItem: React.FC<TeaType> = ({
   description,
   image,
 }) => {
+  const router = useRouter();
   return (
-    <div className="flex h-64 w-64 flex-col p-2 hover:cursor-pointer hover:shadow-xl">
+    <div
+      className="flex h-64 w-64 flex-col p-2 hover:cursor-pointer hover:shadow-xl"
+      onClick={() => void router.push(`items/${id.toString()}`)}
+    >
       <figure className="relative h-4/5 w-full border-2">
         <Image src={`/hiteadrinks/${image}`} alt={"photo of " + name} fill />
       </figure>

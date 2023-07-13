@@ -37,6 +37,11 @@ export default function Items() {
 }
 
 const ItemsDescription: React.FC<TeaType> = ({ name, price, description }) => {
+  const router = useRouter();
+  const onCheckout = async () => {
+    await router.push("/checkout");
+  };
+
   const [selectedOption, setSelectedOption] = useState(1);
   return (
     <div className="flex w-full flex-col items-start gap-3 p-2 md:w-1/2">
@@ -53,7 +58,10 @@ const ItemsDescription: React.FC<TeaType> = ({ name, price, description }) => {
         <option value={3}>3</option>
         <option value={4}>4</option>
       </select>
-      <button className="rounded-lg bg-black p-3 text-lg text-white">
+      <button
+        className="rounded-lg bg-black p-3 text-lg text-white"
+        onClick={() => void onCheckout()}
+      >
         Add {selectedOption} to order |{" £"}
         {((price * selectedOption) / 100).toFixed(2)}
       </button>

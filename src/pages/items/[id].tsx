@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { parse } from "path";
 import { useState } from "react";
 import { TeaType, milkTeaData } from "~/utils/milkTeaData";
 
@@ -36,9 +37,25 @@ export default function Items() {
   );
 }
 
-const ItemsDescription: React.FC<TeaType> = ({ name, price, description }) => {
+const ItemsDescription: React.FC<TeaType> = ({
+  id,
+  name,
+  price,
+  description,
+  image,
+}) => {
   const router = useRouter();
   const onCheckout = async () => {
+    const currentItems = localStorage.getItem("items");
+    let parsedItems: TeaType[] = [];
+    if (currentItems) {
+      parsedItems = JSON.parse(currentItems) as TeaType[];
+    } else {
+      parsedItems = [];
+    }
+    parsedItems = [...parsedItems, { id, name, price, description, image }];
+    localStorage.setItem("items", JSON.stringify(parsedItems));
+
     await router.push("/checkout");
   };
 

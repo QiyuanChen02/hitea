@@ -1,9 +1,24 @@
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { parse } from "path";
 import { useState } from "react";
-import { TeaType, milkTeaData } from "~/utils/milkTeaData";
+import { type TeaType, type TeasType, milkTeaData } from "~/utils/milkTeaData";
+
+export type ParsedItemType = TeaType & { quantity: number };
+const parse = (items: TeasType) => {
+  const parsedItems: ParsedItemType[] = [];
+  for (const item of items) {
+    for (const parsedItem of parsedItems) {
+      if (parsedItem.id === item.id) {
+        parsedItem.quantity += 1;
+      } else {
+        parsedItems.push({ ...item, quantity: 1 });
+      }
+    }
+  }
+
+  return parsedItems;
+};
 
 export default function Items() {
   const router = useRouter();
@@ -45,21 +60,41 @@ const ItemsDescription: React.FC<TeaType> = ({
   image,
 }) => {
   const router = useRouter();
+  const [selectedOption, setSelectedOption] = useState(1);
   const onCheckout = async () => {
+    // gets the current items from local storage
     const currentItems = localStorage.getItem("items");
-    let parsedItems: TeaType[] = [];
+    let parsedItems: ParsedItemType[] = [];
     if (currentItems) {
-      parsedItems = JSON.parse(currentItems) as TeaType[];
+      parsedItems = JSON.parse(currentItems) as ParsedItemType[];
     } else {
       parsedItems = [];
     }
-    parsedItems = [...parsedItems, { id, name, price, description, image }];
-    localStorage.setItem("items", JSON.stringify(parsedItems));
 
+    // adds the new item to the list of items if it's new otherwise it updates the quantity
+    if (!parsedItems.find((item) => item.id === id)) {
+      parsedItems.push({
+        id,
+        name,
+        price,
+        description,
+        image,
+        quantity: selectedOption,
+      });
+    } else {
+      parsedItems = parsedItems.map((item) => {
+        return {
+          ...item,
+          quantity:
+            item.id === id ? item.quantity + selectedOption : item.quantity,
+        };
+      });
+    }
+
+    localStorage.setItem("items", JSON.stringify(parsedItems));
     await router.push("/checkout");
   };
 
-  const [selectedOption, setSelectedOption] = useState(1);
   return (
     <div className="flex w-full flex-col items-start gap-3 p-2 md:w-1/2">
       <h1 className="text-3xl">{name}</h1>

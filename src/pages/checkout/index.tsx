@@ -1,20 +1,15 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/router";
-import IconButton from "~/components/iconbutton";
 import Navbar from "~/components/navbar";
-import { useConsole } from "~/hooks/useConsole";
 import { useLocalStorage } from "~/hooks/useLocalStorage";
-import { type TeaType, type TeasType } from "~/utils/milkTeaData";
+import { type ParsedItemType } from "../items/[id]";
 
 export default function Checkout() {
-  const [items, setItems, itemsLoading] = useLocalStorage<TeasType>(
+  const [items, , itemsLoading] = useLocalStorage<ParsedItemType[]>(
     [],
     "items"
   );
-
-  const router = useRouter();
 
   if (itemsLoading) return <p>Loading...</p>;
 
@@ -34,7 +29,7 @@ export default function Checkout() {
               + Add items
             </Link>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex w-full flex-col gap-2">
             {items.map((item) => (
               <ItemSummary key={item.id} {...item} />
             ))}
@@ -43,7 +38,7 @@ export default function Checkout() {
             className="rounded-full border border-black p-2"
             onClick={() => alert("checking out...")}
           >
-            Checkout
+            Confirm Checkout
           </button>
         </div>
       </main>
@@ -51,11 +46,17 @@ export default function Checkout() {
   );
 }
 
-const ItemSummary: React.FC<TeaType> = ({ id, name, image }) => {
+const ItemSummary: React.FC<ParsedItemType> = ({
+  id,
+  name,
+  image,
+  quantity,
+}) => {
   return (
-    <div className="flex items-center">
+    <div className="flex w-full items-center justify-between border">
       <Image src={`/hiteadrinks/${image}`} alt={name} width={96} height={96} />
-      <p>{name}</p>
+      <p className="w-64">{name}</p>
+      <p className="p-6 font-bold">{quantity}</p>
     </div>
   );
 };

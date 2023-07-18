@@ -5,12 +5,15 @@ import PageWrapper from "~/components/pagewrapper";
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { api } from "~/utils/api";
 import { type ParsedItemType } from "../items/[id]";
+import { useRouter } from "next/router";
 
 export default function Checkout() {
   const items = useLocalStorage<ParsedItemType[]>([], "items");
 
   const { data: session } = useSession();
   const addOrder = api.orders.addOrder.useMutation();
+
+  const router = useRouter();
 
   const onCheckout = async () => {
     if (!session) {
@@ -21,7 +24,10 @@ export default function Checkout() {
           order: JSON.stringify(items),
         },
         {
-          onSuccess: () => localStorage.removeItem("items"),
+          onSuccess: () => {
+            localStorage.removeItem("items");
+            void router.push("/checkout/success");
+          },
         }
       );
     }
@@ -29,20 +35,20 @@ export default function Checkout() {
 
   return (
     <PageWrapper>
-      <div className="flex w-4/5 flex-col items-center md:w-1/2">
-        <div className="flex w-full justify-between">
-          <h2 className="text-xl">Order Summary</h2>
+      <div className="mt-3 flex w-full flex-col gap-6 md:w-1/2">
+        <div className="flex w-full justify-between p-2">
+          <h2 className="p-2 text-2xl">Order Summary</h2>
           <Link className="rounded-full border border-black p-2" href={"/"}>
             + Add items
           </Link>
         </div>
-        <div className="flex w-full flex-col gap-2">
+        <div className="flex w-full flex-col gap-4 p-2 ">
           {items.map((item) => (
             <ItemSummary key={item.id} {...item} />
           ))}
         </div>
         <button
-          className="rounded-full border border-black p-2"
+          className="mx-2 rounded-full border border-black p-2 "
           onClick={() => void onCheckout()}
         >
           Confirm Checkout

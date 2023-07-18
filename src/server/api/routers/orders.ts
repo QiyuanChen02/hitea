@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { createTRPCRouter, protectedProcedure } from "../trpc";
+import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { prisma } from "~/server/db";
 
 export const ordersRouter = createTRPCRouter({
@@ -13,4 +13,8 @@ export const ordersRouter = createTRPCRouter({
         },
       });
     }),
+
+  getOrders: adminProcedure.query(async () => {
+    return prisma.order.findMany();
+  }),
 });

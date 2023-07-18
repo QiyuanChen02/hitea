@@ -1,23 +1,29 @@
-import Head from "next/head";
+import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "~/components/navbar";
-import { useLocalStorage } from "~/hooks/useLocalStorage";
-import { type ParsedItemType } from "../items/[id]";
 import PageWrapper from "~/components/pagewrapper";
-import { signIn, useSession } from "next-auth/react";
+import { useLocalStorage } from "~/hooks/useLocalStorage";
+import { api } from "~/utils/api";
+import { type ParsedItemType } from "../items/[id]";
 
 export default function Checkout() {
   const items = useLocalStorage<ParsedItemType[]>([], "items");
 
   const { data: session } = useSession();
-  const addOrder = trpc.useMutation(["orders.addOrder"]);
+  const addOrder = api.orders.addOrder.useMutation();
 
   const onCheckout = async () => {
     if (!session) {
       await signIn("auth0");
     } else {
-      alert("Checkout successful");
+      addOrder.mutate(
+        {
+          order: JSON.stringify(items),
+        },
+        {
+          onSuccess: () => localStorage.removeItem("items"),
+        }
+      );
     }
   };
 

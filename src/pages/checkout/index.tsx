@@ -5,9 +5,21 @@ import Navbar from "~/components/navbar";
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { type ParsedItemType } from "../items/[id]";
 import PageWrapper from "~/components/pagewrapper";
+import { signIn, useSession } from "next-auth/react";
 
 export default function Checkout() {
   const items = useLocalStorage<ParsedItemType[]>([], "items");
+
+  const { data: session } = useSession();
+  const addOrder = trpc.useMutation(["orders.addOrder"]);
+
+  const onCheckout = async () => {
+    if (!session) {
+      await signIn("auth0");
+    } else {
+      alert("Checkout successful");
+    }
+  };
 
   return (
     <PageWrapper>
@@ -25,7 +37,7 @@ export default function Checkout() {
         </div>
         <button
           className="rounded-full border border-black p-2"
-          onClick={() => alert("checking out...")}
+          onClick={() => void onCheckout()}
         >
           Confirm Checkout
         </button>

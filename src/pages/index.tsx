@@ -7,8 +7,6 @@ import PageWrapper from "~/components/pagewrapper";
 import { api } from "~/utils/api";
 
 export default function Home() {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
   return (
     <PageWrapper>
       {/* <button onClick={() => void signIn("auth0")}>Sign in</button>

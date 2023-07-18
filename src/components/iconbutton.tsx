@@ -8,6 +8,7 @@ type IconButtonType = {
   width?: number;
   height?: number;
   fill?: boolean;
+  sizes?: string;
   text?: string | null;
   spacing?: number;
   visibleOnParentHover?: boolean;
@@ -23,6 +24,7 @@ const IconButton: React.FC<IconButtonType> = ({
   width = 24,
   height = 24,
   fill = false,
+  sizes = "100vw",
   spacing = 12,
   text = null,
   visibleOnParentHover = false,
@@ -70,9 +72,9 @@ const IconButton: React.FC<IconButtonType> = ({
           height={height}
         />
       ) : (
-        <Image src={`/${imageSrc}`} alt={altText} fill />
+        <Image src={`/${imageSrc}`} alt={altText} fill sizes={sizes} />
       )}
-      {text && <p className="ml-2">{text}</p>}
+      {text && <p className="ml-1 text-lg">{text}</p>}
     </button>
   );
 };

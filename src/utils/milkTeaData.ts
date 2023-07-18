@@ -96,7 +96,7 @@ export const milkTeaData: MilkTeaDataType = [
       {
         id: 10,
         name: "Lotus Boboshake Frappe",
-        image: "lotusBoboshakeFrappe.png",
+        image: "oreoBobashakeFrappe.png",
         price: 450,
         description: "Lotus Boboshake Frappe",
       },
@@ -110,7 +110,7 @@ export const milkTeaData: MilkTeaDataType = [
       {
         id: 12,
         name: "Blueberry Yogurt Frappe",
-        image: "blueberryYogurtFrappe.png",
+        image: "oreoBobashakeFrappe.png",
         price: 450,
         description: "Blueberry Yogurt Frappe",
       },

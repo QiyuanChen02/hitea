@@ -6,12 +6,7 @@ import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { type ParsedItemType } from "../items/[id]";
 
 export default function Checkout() {
-  const [items, , itemsLoading] = useLocalStorage<ParsedItemType[]>(
-    [],
-    "items"
-  );
-
-  if (itemsLoading) return <p>Loading...</p>;
+  const items = useLocalStorage<ParsedItemType[]>([], "items");
 
   return (
     <>
@@ -46,12 +41,7 @@ export default function Checkout() {
   );
 }
 
-const ItemSummary: React.FC<ParsedItemType> = ({
-  id,
-  name,
-  image,
-  quantity,
-}) => {
+const ItemSummary: React.FC<ParsedItemType> = ({ name, image, quantity }) => {
   return (
     <div className="flex w-full items-center justify-between border">
       <Image src={`/hiteadrinks/${image}`} alt={name} width={96} height={96} />

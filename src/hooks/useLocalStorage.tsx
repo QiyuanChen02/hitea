@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { useConsole } from "./useConsole";
 
 /** Similar to useState but storing the state in localStorage */
 export const useLocalStorage = <T,>(intialValue: T, key: string) => {
@@ -7,7 +8,6 @@ export const useLocalStorage = <T,>(intialValue: T, key: string) => {
   const queries = router.query;
 
   const [value, setValue] = useState<T>(intialValue);
-  const [isInitialised, setIsInitialised] = useState(false);
 
   useEffect(() => {
     if (queries[key] && typeof queries[key] === "string") {
@@ -20,13 +20,5 @@ export const useLocalStorage = <T,>(intialValue: T, key: string) => {
     }
   }, [key, queries]);
 
-  useEffect(() => {
-    if (isInitialised) {
-      localStorage.setItem(key, JSON.stringify(value));
-    } else {
-      setIsInitialised(true);
-    }
-  }, [value, key, isInitialised]);
-
-  return [value, setValue, !isInitialised] as const;
+  return value;
 };

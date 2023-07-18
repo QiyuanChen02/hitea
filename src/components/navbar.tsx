@@ -1,9 +1,13 @@
 import { useRouter } from "next/router";
 import IconButton from "./iconbutton";
+import { useLocalStorage } from "~/hooks/useLocalStorage";
+import { ParsedItemType } from "~/pages/items/[id]";
 
 // Returns a <Navbar> component
 const Navbar = () => {
   const router = useRouter();
+  const items = useLocalStorage<ParsedItemType[]>([], "items");
+
   return (
     <nav className="flex h-20 w-full items-center bg-pink-400 px-4 md:h-24 md:px-6">
       <div className="flex w-full items-center justify-between">
@@ -12,6 +16,7 @@ const Navbar = () => {
           altText="Hi Tea"
           onClick={() => void router.push("/")}
           fill
+          sizes="64px"
           spacing={0}
           extraClasses="rounded-full hover:brightness-110 w-12 h-12 md:w-16 md:h-16"
         />
@@ -20,10 +25,11 @@ const Navbar = () => {
             imageSrc="trolley.svg"
             altText="Go To Cart"
             onClick={() => void router.push("/checkout")}
-            spacing={4}
+            spacing={10}
             width={32}
             height={32}
-            extraClasses="hover:bg-pink-300"
+            text={`Cart ${items.length}`}
+            extraClasses="hover:bg-pink-300 rounded-full border border-2 border-black"
           />
         </div>
       </div>

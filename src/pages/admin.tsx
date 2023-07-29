@@ -1,36 +1,53 @@
-import { inferProcedureOutput } from "@trpc/server";
+import { signIn } from "next-auth/react";
 import PageWrapper from "~/components/pagewrapper";
 import { useAdmin } from "~/hooks/useAdmin";
-import { useConsole } from "~/hooks/useConsole";
-import { RouterInputs, RouterOutputs, api } from "~/utils/api";
-import { ParsedItemType } from "./items/[id]";
+import { type RouterOutputs, api } from "~/utils/api";
+import { type ParsedItemType } from "./items/[id]";
+import ItemSummary from "~/components/itemsummary";
 
 export default function Admin() {
   const [isAdmin, status] = useAdmin();
 
   const { data: orders } = api.orders.getOrders.useQuery();
 
-  useConsole(isAdmin, "isAdmin");
-
   if (status === "loading") return <p>Loading...</p>;
-  if (!isAdmin) return <p>Access Denied</p>;
   return (
     <PageWrapper>
-      <h1>Admin Page</h1>
-      {orders && orders.map((order) => <Order key={order.id} {...order} />)}
+      {!isAdmin ? (
+        <a onClick={() => void signIn("auth0")}>
+          Sign In With an admin account to access this page
+        </a>
+      ) : (
+        <>
+          <h1>Admin Page</h1>
+          {orders && orders.map((order) => <Order key={order.id} {...order} />)}
+        </>
+      )}
     </PageWrapper>
   );
 }
 
 type OrderType = RouterOutputs["orders"]["getOrders"][number];
 
-const Order: React.FC<OrderType> = ({ items }) => {
+const Order: React.FC<OrderType> = ({ items, id }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
+  const deleteOrder = api.orders.deleteOrder.useMutation();
+
+  const utils = api.useContext();
+
+  const onDeleteOrder = () => {
+    deleteOrder.mutate(
+      { id },
+      { onSuccess: () => void utils.orders.getOrders.invalidate() }
+    );
+  };
   return (
     <div>
+      <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
       {parsedItems.map((item) => (
-        <p key={item.id}>{item.name}</p>
+        <ItemSummary key={item.id} {...item} />
       ))}
+      <button onClick={onDeleteOrder}>Delete Order</button>
     </div>
   );
 };

@@ -15,6 +15,14 @@ export const ordersRouter = createTRPCRouter({
     }),
 
   getOrders: adminProcedure.query(async () => {
-    return prisma.order.findMany();
+    return prisma.order.findMany({
+      orderBy: { createdAt: "desc" },
+    });
   }),
+
+  deleteOrder: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      return prisma.order.delete({ where: { id: input.id } });
+    }),
 });

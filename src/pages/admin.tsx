@@ -29,9 +29,10 @@ export default function Admin() {
 
 type OrderType = RouterOutputs["orders"]["getOrders"][number];
 
-const Order: React.FC<OrderType> = ({ items, id }) => {
+const Order: React.FC<OrderType> = ({ items, id, finished }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
   const deleteOrder = api.orders.deleteOrder.useMutation();
+  const finishOrder = api.orders.finishOrder.useMutation();
 
   const utils = api.useContext();
 
@@ -41,12 +42,21 @@ const Order: React.FC<OrderType> = ({ items, id }) => {
       { onSuccess: () => void utils.orders.getOrders.invalidate() }
     );
   };
+
+  const onFinishOrder = () => {
+    finishOrder.mutate(
+      { id },
+      { onSuccess: () => void utils.orders.getOrders.invalidate() }
+    );
+  };
   return (
     <div>
       <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
+      <p>{finished ? "finished" : "not finished"}</p>
       {parsedItems.map((item) => (
         <ItemSummary key={item.id} {...item} />
       ))}
+      <button onClick={onFinishOrder}>Finish Order</button>
       <button onClick={onDeleteOrder}>Delete Order</button>
     </div>
   );

@@ -20,6 +20,15 @@ export const ordersRouter = createTRPCRouter({
     });
   }),
 
+  finishOrder: adminProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ input }) => {
+      return prisma.order.update({
+        where: { id: input.id },
+        data: { finished: true },
+      });
+    }),
+
   deleteOrder: adminProcedure
     .input(z.object({ id: z.string() }))
     .mutation(async ({ input }) => {

@@ -8,7 +8,9 @@ import ItemSummary from "~/components/itemsummary";
 export default function Admin() {
   const [isAdmin, status] = useAdmin();
 
-  const { data: orders } = api.orders.getOrders.useQuery();
+  const { data: orders } = api.orders.getOrders.useQuery(undefined, {
+    refetchInterval: 6000,
+  });
 
   if (status === "loading") return <p>Loading...</p>;
   return (

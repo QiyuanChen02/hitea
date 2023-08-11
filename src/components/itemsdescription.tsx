@@ -2,18 +2,26 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useLocalStorage } from "~/hooks/useLocalStorage";
 import { type ParsedItemType } from "~/pages/items/[id]";
+import { api } from "~/utils/api";
 import { type TeaType } from "~/utils/milkTeaData";
 
-const ItemsDescription: React.FC<TeaType> = ({
+type ItemsDescriptionType = ParsedItemType & {
+  toggleShowModal?: () => void;
+};
+
+const ItemsDescription: React.FC<ItemsDescriptionType> = ({
   id,
   name,
   price,
   description,
   image,
+  quantity,
+  toggleShowModal,
 }) => {
   const router = useRouter();
-  const [selectedOption, setSelectedOption] = useState(1);
+  const [selectedOption, setSelectedOption] = useState(quantity);
 
+  const utils = api.useContext();
   const items = useLocalStorage<ParsedItemType[]>([], "items");
 
   const onCheckout = async () => {
@@ -42,7 +50,13 @@ const ItemsDescription: React.FC<TeaType> = ({
     }
 
     localStorage.setItem("items", JSON.stringify(parsedItems));
-    await router.push("/checkout");
+
+    // if the modal is open (on the checkout page) it closes it otherwise it redirects to the checkout page
+    if (toggleShowModal) {
+      toggleShowModal();
+    } else {
+      await router.push("/checkout");
+    }
   };
 
   return (

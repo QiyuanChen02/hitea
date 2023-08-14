@@ -1,37 +1,22 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useLocalStorage } from "~/hooks/useLocalStorage";
-import { type ParsedItemType } from "~/pages/items/[id]";
-import { api } from "~/utils/api";
+import { useCartStore } from "~/hooks/useCart";
 import { type TeaType } from "~/utils/milkTeaData";
 
-type ItemsDescriptionType = ParsedItemType & {
-  toggleShowModal?: () => void;
-};
-
-const ItemsDescription: React.FC<ItemsDescriptionType> = ({
+const ItemsDescription: React.FC<TeaType> = ({
   id,
   name,
   price,
   description,
   image,
-  quantity,
-  toggleShowModal,
 }) => {
+  const { items, addItem, increaseQuantity } = useCartStore();
   const router = useRouter();
-  const [selectedOption, setSelectedOption] = useState(quantity);
-
-  const utils = api.useContext();
-  const items = useLocalStorage<ParsedItemType[]>([], "items");
+  const [selectedOption, setSelectedOption] = useState(1);
 
   const onCheckout = async () => {
-    // gets the current items from local storage
-    let parsedItems: ParsedItemType[] = [];
-    parsedItems = items ? items : [];
-
-    // adds the new item to the list of items if it's new otherwise it updates the quantity
-    if (!parsedItems.find((item) => item.id === id)) {
-      parsedItems.push({
+    if (!items.find((item) => item.id === id)) {
+      addItem({
         id,
         name,
         price,
@@ -40,23 +25,9 @@ const ItemsDescription: React.FC<ItemsDescriptionType> = ({
         quantity: selectedOption,
       });
     } else {
-      parsedItems = parsedItems.map((item) => {
-        return {
-          ...item,
-          quantity:
-            item.id === id ? item.quantity + selectedOption : item.quantity,
-        };
-      });
+      increaseQuantity(id, selectedOption);
     }
-
-    localStorage.setItem("items", JSON.stringify(parsedItems));
-
-    // if the modal is open (on the checkout page) it closes it otherwise it redirects to the checkout page
-    if (toggleShowModal) {
-      toggleShowModal();
-    } else {
-      await router.push("/checkout");
-    }
+    await router.push("/checkout");
   };
 
   return (

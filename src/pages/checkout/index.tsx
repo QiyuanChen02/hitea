@@ -1,15 +1,13 @@
 import { signIn, useSession } from "next-auth/react";
-import Image from "next/image";
 import Link from "next/link";
-import PageWrapper from "~/components/pagewrapper";
-import { useLocalStorage } from "~/hooks/useLocalStorage";
-import { api } from "~/utils/api";
-import { type ParsedItemType } from "../items/[id]";
 import { useRouter } from "next/router";
 import ItemSummary from "~/components/itemsummary";
+import PageWrapper from "~/components/pagewrapper";
+import { useCartStore } from "~/hooks/useCart";
+import { api } from "~/utils/api";
 
 export default function Checkout() {
-  const items = useLocalStorage<ParsedItemType[]>([], "items");
+  const { items, clearItems } = useCartStore();
 
   const { data: session } = useSession();
   const addOrder = api.orders.addOrder.useMutation();
@@ -26,7 +24,7 @@ export default function Checkout() {
         },
         {
           onSuccess: () => {
-            localStorage.removeItem("items");
+            clearItems();
             void router.push("/checkout/success");
           },
         }
@@ -45,7 +43,7 @@ export default function Checkout() {
         </div>
         <div className="flex w-full flex-col gap-4 p-2 ">
           {items.map((item) => (
-            <ItemSummary key={item.id} {...item} />
+            <ItemSummary key={item.id} item={item} />
           ))}
         </div>
         <button

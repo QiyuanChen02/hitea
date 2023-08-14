@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
+import { useCartStore } from "~/hooks/useCart";
 import IconButton from "./iconbutton";
-import { useLocalStorage } from "~/hooks/useLocalStorage";
-import { ParsedItemType } from "~/pages/items/[id]";
 
 // Returns a <Navbar> component
 const Navbar = () => {
   const router = useRouter();
-  const items = useLocalStorage<ParsedItemType[]>([], "items");
+  const { items } = useCartStore();
 
   return (
     <nav className="flex h-20 w-full items-center bg-pink-400 px-4 md:h-24 md:px-6">

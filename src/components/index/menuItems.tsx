@@ -49,7 +49,7 @@ const MenuItem: React.FC<TeaType> = ({
           src={`/hiteadrinks/${image}`}
           alt={"photo of " + name}
           fill
-          priority // todo: remove this for items under the
+          priority // todo: remove this for items under the fold
           sizes="250px"
         />
       </figure>

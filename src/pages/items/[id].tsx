@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
-import ItemsDescription from "~/components/itemsdescription";
-import PageWrapper from "~/components/pagewrapper";
+import ItemsDescription from "~/components/chooseItem/itemsdescription";
+import PageWrapper from "~/components/utils/pagewrapper";
 import { milkTeaData, type TeaType } from "~/utils/milkTeaData";
 
 export type ParsedItemType = TeaType & { quantity: number };

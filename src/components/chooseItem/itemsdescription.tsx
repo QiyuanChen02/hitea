@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useCartStore } from "~/hooks/useCart";
+import { useCartStore } from "~/hooks/zustand/useCart";
 import { type TeaType } from "~/utils/milkTeaData";
 
 const ItemsDescription: React.FC<TeaType> = ({

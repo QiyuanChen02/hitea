@@ -1,9 +1,9 @@
 import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import ItemSummary from "~/components/itemsummary";
-import PageWrapper from "~/components/pagewrapper";
-import { useCartStore } from "~/hooks/useCart";
+import ItemSummary from "~/components/checkout/itemsummary";
+import PageWrapper from "~/components/utils/pagewrapper";
+import { useCartStore } from "~/hooks/zustand/useCart";
 import { api } from "~/utils/api";
 
 export default function Checkout() {
@@ -41,7 +41,7 @@ export default function Checkout() {
             + Add items
           </Link>
         </div>
-        <div className="flex w-full flex-col gap-4 p-2 ">
+        <div className="flex w-full flex-col gap-4 p-2">
           {items.map((item) => (
             <ItemSummary key={item.id} item={item} />
           ))}

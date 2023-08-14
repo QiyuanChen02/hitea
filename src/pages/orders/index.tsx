@@ -1,4 +1,4 @@
-import PageWrapper from "~/components/pagewrapper";
+import PageWrapper from "~/components/utils/pagewrapper";
 
 export default function Orders() {
   return (

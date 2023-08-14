@@ -74,7 +74,11 @@ const IconButton: React.FC<IconButtonType> = ({
       ) : (
         <Image src={`/${imageSrc}`} alt={altText} fill sizes={sizes} />
       )}
-      {text && <p className="ml-1 text-lg">{text}</p>}
+      {text && (
+        <p className="ml-1 text-lg" suppressHydrationWarning>
+          {text}
+        </p>
+      )}
     </button>
   );
 };

@@ -1,11 +1,14 @@
 import { useRouter } from "next/router";
-import { useCartStore } from "~/hooks/useCart";
+import { useCartStore } from "~/hooks/zustand/useCart";
 import IconButton from "./iconbutton";
+import { useDomLoaded } from "~/hooks/utils/useDomLoaded";
 
 // Returns a <Navbar> component
 const Navbar = () => {
   const router = useRouter();
   const { items } = useCartStore();
+
+  const domLoaded = useDomLoaded();
 
   return (
     <nav className="flex h-20 w-full items-center bg-pink-400 px-4 md:h-24 md:px-6">
@@ -20,16 +23,18 @@ const Navbar = () => {
           extraClasses="rounded-full hover:brightness-110 w-12 h-12 md:w-16 md:h-16"
         />
         <div className="flex gap-1">
-          <IconButton
-            imageSrc="trolley.svg"
-            altText="Go To Cart"
-            onClick={() => void router.push("/checkout")}
-            spacing={10}
-            width={32}
-            height={32}
-            text={`Cart ${items.length}`}
-            extraClasses="hover:bg-pink-300 rounded-full border border-2 border-black"
-          />
+          {domLoaded && (
+            <IconButton
+              imageSrc="trolley.svg"
+              altText="Go To Cart"
+              onClick={() => void router.push("/checkout")}
+              spacing={10}
+              width={32}
+              height={32}
+              text={`Cart ${items.length}`}
+              extraClasses="hover:bg-pink-300 rounded-full border border-2 border-black"
+            />
+          )}
         </div>
       </div>
     </nav>

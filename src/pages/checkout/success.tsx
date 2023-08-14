@@ -1,6 +1,7 @@
 import Link from "next/link";
-import PageWrapper from "~/components/pagewrapper";
+import PageWrapper from "~/components/utils/pagewrapper";
 
+/** Page to redirect to once the order is finished */
 export default function Success() {
   return (
     <PageWrapper>

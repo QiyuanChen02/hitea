@@ -1,5 +1,5 @@
-import Menu from "~/components/menuItems";
-import PageWrapper from "~/components/pagewrapper";
+import Menu from "~/components/index/menuItems";
+import PageWrapper from "~/components/utils/pagewrapper";
 
 export default function Home() {
   return (

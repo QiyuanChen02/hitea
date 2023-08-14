@@ -1,9 +1,9 @@
 import { signIn } from "next-auth/react";
-import PageWrapper from "~/components/pagewrapper";
-import { useAdmin } from "~/hooks/useAdmin";
+import PageWrapper from "~/components/utils/pagewrapper";
+import { useAdmin } from "~/hooks/utils/useAdmin";
 import { type RouterOutputs, api } from "~/utils/api";
 import { type ParsedItemType } from "./items/[id]";
-import ItemSummary from "~/components/itemsummary";
+import ItemSummary from "~/components/checkout/itemsummary";
 
 export default function Admin() {
   const [isAdmin, status] = useAdmin();
@@ -56,7 +56,7 @@ const Order: React.FC<OrderType> = ({ items, id, finished }) => {
       <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
       <p>{finished ? "finished" : "not finished"}</p>
       {parsedItems.map((item) => (
-        <ItemSummary key={item.id} {...item} />
+        <ItemSummary key={item.id} item={item} />
       ))}
       <button onClick={onFinishOrder}>Finish Order</button>
       <button onClick={onDeleteOrder}>Delete Order</button>

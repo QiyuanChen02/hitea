@@ -5,6 +5,7 @@ import { useConsole } from "./useConsole";
 const adminEmails: string[] = [
   "qiyuan.chen2002@gmail.com",
   "wwwindwing@gmail.com",
+  "qiyuan.chen@univ.ox.ac.uk",
 ];
 
 // Uncomment this to test what the website looks like for non-admins

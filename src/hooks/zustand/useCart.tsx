@@ -5,6 +5,7 @@ import { type ParsedItemType } from "~/pages/items/[id]";
 type CartStoreType = {
   items: ParsedItemType[];
   addItem: (item: ParsedItemType) => void;
+  deleteItem: (id: number) => void;
   increaseQuantity: (id: number, count: number) => void;
   updateQuantity: (id: number, count: number) => void;
   clearItems: () => void;
@@ -39,6 +40,10 @@ export const useCartStore = create<
         })),
 
       addItem: (item) => set((state) => ({ items: [...state.items, item] })),
+      deleteItem: (id) =>
+        set((state) => ({
+          items: state.items.filter((item) => item.id !== id),
+        })),
       clearItems: () => set({ items: [] }),
       setItems: (items) => set({ items }),
     }),

@@ -1,9 +1,9 @@
 import { signIn } from "next-auth/react";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
-import { type RouterOutputs, api } from "~/utils/api";
+import { api, type RouterOutputs } from "~/utils/api";
 import { type ParsedItemType } from "./items/[id]";
-import ItemSummary from "~/components/checkout/itemsummary";
+import dayjs from "dayjs";
 
 export default function Admin() {
   const [isAdmin, status] = useAdmin();
@@ -20,10 +20,9 @@ export default function Admin() {
           Sign In With an admin account to access this page
         </a>
       ) : (
-        <>
-          <h1>Admin Page</h1>
+        <div className="mt-10 flex w-full flex-col gap-4 md:w-1/2">
           {orders && orders.map((order) => <Order key={order.id} {...order} />)}
-        </>
+        </div>
       )}
     </PageWrapper>
   );
@@ -31,7 +30,7 @@ export default function Admin() {
 
 type OrderType = RouterOutputs["orders"]["getOrders"][number];
 
-const Order: React.FC<OrderType> = ({ items, id, finished }) => {
+const Order: React.FC<OrderType> = ({ items, id, finished, createdAt }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
   const deleteOrder = api.orders.deleteOrder.useMutation();
   const finishOrder = api.orders.finishOrder.useMutation();
@@ -53,13 +52,43 @@ const Order: React.FC<OrderType> = ({ items, id, finished }) => {
   };
   return (
     <div>
-      <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
-      <p>{finished ? "finished" : "not finished"}</p>
-      {parsedItems.map((item) => (
-        <ItemSummary key={item.id} item={item} />
-      ))}
-      <button onClick={onFinishOrder}>Finish Order</button>
-      <button onClick={onDeleteOrder}>Delete Order</button>
+      <div className="flex justify-between">
+        <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
+        <p>{finished ? "Complete" : "In Progress"}</p>
+        <p>{dayjs(createdAt).format("HH:mm:ss")}</p>
+      </div>
+
+      <div className="gap-2 border p-2">
+        {parsedItems.map((item) => (
+          <Item key={item.id} item={item} />
+        ))}
+      </div>
+
+      <button
+        className="m-2 rounded-xl bg-green-300 px-4 py-2"
+        onClick={onFinishOrder}
+      >
+        Finish Order
+      </button>
+      <button
+        className="m-2 rounded-xl bg-red-300 px-4 py-2"
+        onClick={onDeleteOrder}
+      >
+        Delete Order
+      </button>
+    </div>
+  );
+};
+
+type ItemType = {
+  item: ParsedItemType;
+};
+
+const Item: React.FC<ItemType> = ({ item }) => {
+  return (
+    <div className="flex justify-between gap-2">
+      <p>{item.name}</p>
+      <p>X{item.quantity}</p>
     </div>
   );
 };

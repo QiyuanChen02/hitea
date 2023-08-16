@@ -20,7 +20,7 @@ export default function Admin() {
           Sign In With an admin account to access this page
         </a>
       ) : (
-        <div className="mt-10 flex w-full flex-col gap-4 md:w-1/2">
+        <div className="mt-10 flex w-5/6 flex-col gap-4 md:w-1/2">
           {orders && orders.map((order) => <Order key={order.id} {...order} />)}
         </div>
       )}
@@ -28,7 +28,7 @@ export default function Admin() {
   );
 }
 
-type OrderType = RouterOutputs["orders"]["getOrders"][number];
+export type OrderType = RouterOutputs["orders"]["getOrders"][number];
 
 const Order: React.FC<OrderType> = ({ items, id, finished, createdAt }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];

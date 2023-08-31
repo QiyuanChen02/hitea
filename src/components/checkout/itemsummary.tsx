@@ -12,8 +12,6 @@ const ItemSummary: React.FC<ItemSummaryType> = ({ item }) => {
   const { image, name, quantity, price } = item;
   const { showModal, checkoutUpdateModals } = useModalStore();
 
-  const domLoaded = useDomLoaded();
-  if (!domLoaded) return;
   return (
     <>
       <div

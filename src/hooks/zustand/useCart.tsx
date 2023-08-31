@@ -1,15 +1,19 @@
+import type dayjs from "dayjs";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { type ParsedItemType } from "~/pages/items/[id]";
 
 type CartStoreType = {
   items: ParsedItemType[];
+  pickupTime: string | null;
   addItem: (item: ParsedItemType) => void;
   deleteItem: (id: number) => void;
   increaseQuantity: (id: number, count: number) => void;
   updateQuantity: (id: number, count: number) => void;
   clearItems: () => void;
   setItems: (items: ParsedItemType[]) => void;
+
+  setPickupTime: (time: string | null) => void;
 };
 
 export const useCartStore = create<
@@ -19,6 +23,7 @@ export const useCartStore = create<
   persist(
     (set) => ({
       items: [],
+      pickupTime: null,
       increaseQuantity: (id: number, count: number) =>
         set((state) => ({
           items: state.items.map((item) => {
@@ -46,6 +51,8 @@ export const useCartStore = create<
         })),
       clearItems: () => set({ items: [] }),
       setItems: (items) => set({ items }),
+
+      setPickupTime: (time) => set({ pickupTime: time }),
     }),
     { name: "cart" }
   )

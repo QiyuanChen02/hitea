@@ -1,14 +1,15 @@
 import { z } from "zod";
-import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 import { prisma } from "~/server/db";
+import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const ordersRouter = createTRPCRouter({
   addOrder: protectedProcedure
-    .input(z.object({ order: z.string() }))
+    .input(z.object({ items: z.string(), pickupTime: z.string() }))
     .mutation(async ({ input, ctx }) => {
       return prisma.order.create({
         data: {
-          items: input.order,
+          items: input.items,
+          pickupTime: input.pickupTime,
           userId: ctx.session.user.id,
         },
       });

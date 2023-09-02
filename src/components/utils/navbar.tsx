@@ -12,10 +12,15 @@ import { useAdmin } from "~/hooks/utils/useAdmin";
 const Navbar = () => {
   const router = useRouter();
   const { items } = useCartStore();
-  const { showDrawer, drawerOpen } = useDrawerStore();
+  const { showDrawer, hideDrawer, drawerOpen } = useDrawerStore();
   const { status } = useSession();
   const domLoaded = useDomLoaded();
   const isAdmin = useAdmin();
+
+  const goToPage = (page: string) => {
+    void router.push(page);
+    hideDrawer();
+  };
 
   return (
     <nav className="flex h-20 w-full items-center bg-pink-400 px-4 md:h-24 md:px-6">
@@ -27,23 +32,36 @@ const Navbar = () => {
           fill
           sizes="64px"
           spacing={0}
-          extraClasses="w-8 h-8 md:w-12 md:h-12"
+          extraClasses="w-8 h-8 md:w-12 md:h-12 md:hidden"
         />
         <IconButton
           imageSrc="hitea-logo.png"
           altText="Hi Tea"
-          onClick={() => void router.push("/")}
+          onClick={() => goToPage("/")}
           fill
           sizes="64px"
           spacing={0}
           extraClasses="rounded-full hover:brightness-110 w-12 h-12 md:w-16 md:h-16"
         />
+        <div className="hidden gap-6 md:flex">
+          <Link href="/about">
+            <p className="font-medium hover:text-gray-700">About</p>
+          </Link>
+          <Link href="/myorders">
+            <p className="font-medium hover:text-gray-700">My Orders</p>
+          </Link>
+          {isAdmin && (
+            <Link href="/admin">
+              <p className="font-medium hover:text-gray-700">Admin</p>
+            </Link>
+          )}
+        </div>
         <div className="flex gap-1">
           {domLoaded && (
             <IconButton
               imageSrc="icons/trolley.svg"
               altText="Go To Cart"
-              onClick={() => void router.push("/checkout")}
+              onClick={() => goToPage("/checkout")}
               spacing={10}
               width={32}
               height={32}
@@ -59,14 +77,20 @@ const Navbar = () => {
             <>
               <button
                 className="p-3 font-medium hover:bg-gray-100"
-                onClick={() => void router.push("/myorders")}
+                onClick={() => goToPage("/about")}
+              >
+                About
+              </button>
+              <button
+                className="p-3 font-medium hover:bg-gray-100"
+                onClick={() => goToPage("/myorders")}
               >
                 My Orders
               </button>
               {isAdmin && (
                 <button
                   className="p-3 font-medium hover:bg-gray-100"
-                  onClick={() => void router.push("/admin")}
+                  onClick={() => goToPage("/admin")}
                 >
                   Admin Page
                 </button>

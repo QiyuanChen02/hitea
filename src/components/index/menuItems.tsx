@@ -22,7 +22,7 @@ const Category: React.FC<MilkTeaCategoryType> = ({ type, teas }) => {
   return (
     <div className="p-2">
       <h2 className="p-2 text-2xl">{type}</h2>
-      <div className="flex w-full flex-row flex-wrap md:gap-2">
+      <div className="flex w-full flex-row flex-wrap">
         {teas.map((tea) => (
           <MenuItem key={tea.id} {...tea} />
         ))}
@@ -41,7 +41,7 @@ const MenuItem: React.FC<TeaType> = ({
   const router = useRouter();
   return (
     <div
-      className="flex h-56 w-44 flex-col p-2 hover:cursor-pointer hover:shadow-xl md:h-64 md:w-60"
+      className="flex h-56 w-44 flex-col p-2 hover:cursor-pointer hover:shadow-xl md:h-64 md:w-60 md:p-4"
       onClick={() => void router.push(`items/${id.toString()}`)}
     >
       <figure className="relative h-4/5 w-full border-2">

@@ -58,25 +58,31 @@ const Navbar = () => {
           {status === "authenticated" ? (
             <>
               <button
-                className="p-2"
+                className="p-3 hover:bg-gray-100"
                 onClick={() => void router.push("/myorders")}
               >
                 My Orders
               </button>
               {isAdmin && (
                 <button
-                  className="p-2"
+                  className="p-3 hover:bg-gray-100"
                   onClick={() => void router.push("/admin")}
                 >
                   Admin Page
                 </button>
               )}
-              <button className="p-2" onClick={() => void signOut()}>
+              <button
+                className="p-3 hover:bg-gray-100"
+                onClick={() => void signOut()}
+              >
                 Sign Out
               </button>
             </>
           ) : (
-            <button className="p-2" onClick={() => void signIn("auth0")}>
+            <button
+              className="p-3 hover:bg-gray-100"
+              onClick={() => void signIn("auth0")}
+            >
               Sign In
             </button>
           )}

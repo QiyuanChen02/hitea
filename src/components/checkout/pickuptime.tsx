@@ -13,8 +13,8 @@ const times = [
 
 const PickupTime: React.FC = () => {
   return (
-    <div className="mt-3 flex w-full flex-col gap-6 md:w-1/2">
-      <div className="flex w-full flex-col justify-between p-2">
+    <div className="flex w-full flex-col">
+      <div className="flex w-full flex-col justify-between gap-2">
         <h2 className="text-2xl">Pickup Time</h2>
         <p>Please choose a suitable time for you to pickup your order: </p>
         <div className="flex flex-col gap-2 py-2">
@@ -37,7 +37,7 @@ const PickupTimeButton: React.FC<PickupTimeButtonType> = ({ time }) => {
   const formattedTime = time.format("h:mm a");
   return (
     <button
-      className={`mx-2 w-36 rounded-full border border-black p-2 ${
+      className={`w-36 rounded-full border border-black p-2 ${
         pickupTime === formattedTime
           ? "bg-black text-white"
           : "bg-white text-black"

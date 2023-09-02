@@ -5,6 +5,7 @@ import { useModalStore } from "~/hooks/zustand/useModal";
 import { type ParsedItemType } from "~/pages/items/[id]";
 import IconButton from "../utils/iconbutton";
 import Modal from "../utils/modal";
+import ActionButton from "../utils/actionbutton";
 
 type ItemModalType = {
   item: ParsedItemType;
@@ -48,7 +49,9 @@ const ItemModal: React.FC<ItemModalType> = ({ item }) => {
             spacing={8}
             extraClasses="bg-gray-300 rounded-full"
             onClick={() =>
-              setNewQuantity((updatedQuantity) => updatedQuantity - 1)
+              setNewQuantity((updatedQuantity) =>
+                Math.max(updatedQuantity - 1, 1)
+              )
             }
           />
           <p>{newQuantity}</p>
@@ -60,16 +63,15 @@ const ItemModal: React.FC<ItemModalType> = ({ item }) => {
             spacing={8}
             extraClasses="bg-gray-300 rounded-full"
             onClick={() =>
-              setNewQuantity((updatedQuantity) => updatedQuantity + 1)
+              setNewQuantity((updatedQuantity) =>
+                Math.min(updatedQuantity + 1, 4)
+              )
             }
           />
-          <button
-            className="rounded-lg bg-black p-3 text-lg text-white"
-            onClick={() => onUpdate()}
-          >
+          <ActionButton onClick={() => onUpdate()}>
             Update Order |{" £"}
             {((price * newQuantity) / 100).toFixed(2)}
-          </button>
+          </ActionButton>
         </div>
       </div>
     </Modal>

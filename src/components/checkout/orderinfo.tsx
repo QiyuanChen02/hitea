@@ -1,29 +1,38 @@
 import Link from "next/link";
 import ItemSummary from "~/components/checkout/itemsummary";
 import { useCartStore } from "~/hooks/zustand/useCart";
+import ActionButton from "../utils/actionbutton";
+import { useRouter } from "next/router";
 
 const OrderSummary: React.FC = () => {
   const { items } = useCartStore();
+  const router = useRouter();
 
   const totalCost = items.reduce((acc, item) => acc + item.price, 0);
   return (
-    <div className="mt-3 flex w-full flex-col gap-6 md:w-1/2">
-      <div className="flex w-full justify-between p-2">
+    <div className="mt-4 flex w-full flex-col">
+      <div className="flex w-full justify-between">
         <h2 className="text-2xl">Order Info</h2>
-        <Link className="rounded-full border border-black p-2" href={"/"}>
+        <ActionButton onClick={() => void router.push("/")}>
           + Add items
-        </Link>
+        </ActionButton>
       </div>
-      <div className="flex w-full flex-col gap-4 p-2">
+      <div className="flex w-full flex-col gap-4">
         {items.length !== 0 ? (
-          items.map((item) => <ItemSummary key={item.id} item={item} />)
+          <div className="py-4">
+            {items.map((item) => (
+              <ItemSummary key={item.id} item={item} />
+            ))}
+          </div>
         ) : (
-          <p className="p-2">No items in cart</p>
+          <p>No items in cart</p>
         )}
       </div>
-      <p className="mx-2 text-right text-lg">
-        Total Cost: £{(totalCost / 100).toFixed(2)}
-      </p>
+      {items.length !== 0 && (
+        <p className="mx-2 text-right text-lg">
+          Total Cost: £{(totalCost / 100).toFixed(2)}
+        </p>
+      )}
     </div>
   );
 };

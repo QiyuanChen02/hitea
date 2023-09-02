@@ -2,6 +2,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import { api } from "~/utils/api";
+import ActionButton from "../utils/actionbutton";
 
 const ConfirmOrder: React.FC = () => {
   const { items, clearItems, pickupTime, setPickupTime } = useCartStore();
@@ -35,12 +36,9 @@ const ConfirmOrder: React.FC = () => {
   };
 
   return (
-    <button
-      className="mx-2 rounded-full border border-black p-2 "
-      onClick={() => void onCheckout()}
-    >
+    <ActionButton onClick={() => void onCheckout()}>
       Confirm Checkout
-    </button>
+    </ActionButton>
   );
 };
 

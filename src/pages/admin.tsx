@@ -4,6 +4,7 @@ import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
 import { api, type RouterOutputs } from "~/utils/api";
 import { type ParsedItemType } from "./items/[id]";
+import ActionButton from "~/components/utils/actionbutton";
 
 export default function Admin() {
   const [isAdmin, status] = useAdmin();
@@ -28,18 +29,16 @@ export default function Admin() {
       ) : (
         <div className="mt-10 flex w-5/6 flex-col gap-4 md:w-1/2">
           <div className="flex gap-2">
-            <button
-              className="rounded-full border border-black p-2"
+            <ActionButton
               onClick={() => void router.push("/admin?type=inprogress")}
             >
               In Progress
-            </button>
-            <button
-              className="rounded-full border border-black p-2"
+            </ActionButton>
+            <ActionButton
               onClick={() => void router.push("/admin?type=complete")}
             >
               Complete
-            </button>
+            </ActionButton>
           </div>
           {orders && orders.map((order) => <Order key={order.id} {...order} />)}
         </div>
@@ -52,17 +51,9 @@ export type OrderType = RouterOutputs["orders"]["getOrders"][number];
 
 const Order: React.FC<OrderType> = ({ items, id, finished, pickupTime }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
-  const deleteOrder = api.orders.deleteOrder.useMutation();
   const finishOrder = api.orders.finishOrder.useMutation();
 
   const utils = api.useContext();
-
-  const onDeleteOrder = () => {
-    deleteOrder.mutate(
-      { id },
-      { onSuccess: () => void utils.orders.getOrders.invalidate() }
-    );
-  };
 
   const onFinishOrder = () => {
     finishOrder.mutate(
@@ -73,7 +64,7 @@ const Order: React.FC<OrderType> = ({ items, id, finished, pickupTime }) => {
   return (
     <div>
       <div className="flex justify-between">
-        <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
+        <h2 className="text-lg">Order {id.slice(0, 10)}</h2>
         <p>{finished ? "Complete" : "In Progress"}</p>
         <p>{pickupTime}</p>
       </div>
@@ -84,18 +75,9 @@ const Order: React.FC<OrderType> = ({ items, id, finished, pickupTime }) => {
         ))}
       </div>
 
-      <button
-        className="m-2 rounded-xl bg-green-300 px-4 py-2"
-        onClick={onFinishOrder}
-      >
+      <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>
         Finish Order
-      </button>
-      <button
-        className="m-2 rounded-xl bg-red-300 px-4 py-2"
-        onClick={onDeleteOrder}
-      >
-        Delete Order
-      </button>
+      </ActionButton>
     </div>
   );
 };

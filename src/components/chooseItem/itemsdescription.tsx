@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import { type TeaType } from "~/utils/milkTeaData";
+import ActionButton from "../utils/actionbutton";
 
 const ItemsDescription: React.FC<TeaType> = ({
   id,
@@ -45,13 +46,10 @@ const ItemsDescription: React.FC<TeaType> = ({
         <option value={3}>3</option>
         <option value={4}>4</option>
       </select>
-      <button
-        className="rounded-lg bg-black p-3 text-lg text-white"
-        onClick={() => void onCheckout()}
-      >
+      <ActionButton onClick={() => void onCheckout()}>
         Add {selectedOption} to order |{" £"}
         {((price * selectedOption) / 100).toFixed(2)}
-      </button>
+      </ActionButton>
     </div>
   );
 };

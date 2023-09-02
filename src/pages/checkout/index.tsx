@@ -9,7 +9,7 @@ export default function Checkout() {
   return (
     <PageWrapper>
       {domLoaded && (
-        <div className="flex w-full flex-col items-center gap-4 md:w-1/2">
+        <div className="flex w-full flex-col items-center gap-4 p-5 md:w-3/4 lg:w-1/2">
           <OrderInfo />
           <PickupTime />
           <ConfirmOrder />

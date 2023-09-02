@@ -19,6 +19,7 @@ const Modal: React.FC<ModalType> = ({ children, id }) => {
           <IconButton
             imageSrc="icons/close.svg"
             altText="close tab"
+            extraClasses="hover:bg-gray-200"
             width={24}
             height={24}
           />

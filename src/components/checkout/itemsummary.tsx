@@ -31,7 +31,7 @@ const ItemSummary: React.FC<ItemSummaryType> = ({ item }) => {
               <p className="translate-y-[-4px] text-center">{quantity}</p>
             </div>
           </figure>
-          <p className="w-64">{name}</p>
+          <p>{name}</p>
         </div>
         <p className="w-16 font-bold">
           £{((quantity * price) / 100).toFixed(2)}

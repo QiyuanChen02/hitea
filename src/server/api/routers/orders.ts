@@ -15,11 +15,14 @@ export const ordersRouter = createTRPCRouter({
       });
     }),
 
-  getOrders: adminProcedure.query(async () => {
-    return prisma.order.findMany({
-      orderBy: { createdAt: "desc" },
-    });
-  }),
+  getOrders: adminProcedure
+    .input(z.object({ type: z.enum(["inprogress", "complete"]) }))
+    .query(async ({ input }) => {
+      return prisma.order.findMany({
+        orderBy: { createdAt: "desc" },
+        where: { finished: input.type === "complete" },
+      });
+    }),
 
   finishOrder: adminProcedure
     .input(z.object({ id: z.string() }))

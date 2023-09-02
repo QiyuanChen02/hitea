@@ -1,16 +1,22 @@
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
 import { api, type RouterOutputs } from "~/utils/api";
 import { type ParsedItemType } from "./items/[id]";
-import dayjs from "dayjs";
 
 export default function Admin() {
   const [isAdmin, status] = useAdmin();
 
-  const { data: orders } = api.orders.getOrders.useQuery(undefined, {
-    refetchInterval: 6000,
-  });
+  const router = useRouter();
+  const { type } = router.query;
+
+  const { data: orders } = api.orders.getOrders.useQuery(
+    { type: type === "complete" ? "complete" : "inprogress" },
+    {
+      refetchInterval: 6000,
+    }
+  );
 
   if (status === "loading") return <p>Loading...</p>;
   return (
@@ -21,6 +27,20 @@ export default function Admin() {
         </a>
       ) : (
         <div className="mt-10 flex w-5/6 flex-col gap-4 md:w-1/2">
+          <div className="flex gap-2">
+            <button
+              className="rounded-full border border-black p-2"
+              onClick={() => void router.push("/admin?type=inprogress")}
+            >
+              In Progress
+            </button>
+            <button
+              className="rounded-full border border-black p-2"
+              onClick={() => void router.push("/admin?type=complete")}
+            >
+              Complete
+            </button>
+          </div>
           {orders && orders.map((order) => <Order key={order.id} {...order} />)}
         </div>
       )}
@@ -30,7 +50,7 @@ export default function Admin() {
 
 export type OrderType = RouterOutputs["orders"]["getOrders"][number];
 
-const Order: React.FC<OrderType> = ({ items, id, finished, createdAt }) => {
+const Order: React.FC<OrderType> = ({ items, id, finished, pickupTime }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
   const deleteOrder = api.orders.deleteOrder.useMutation();
   const finishOrder = api.orders.finishOrder.useMutation();
@@ -55,7 +75,7 @@ const Order: React.FC<OrderType> = ({ items, id, finished, createdAt }) => {
       <div className="flex justify-between">
         <h2 className="text-lg">Order {id.slice(0, 5)}</h2>
         <p>{finished ? "Complete" : "In Progress"}</p>
-        <p>{dayjs(createdAt).format("HH:mm:ss")}</p>
+        <p>{pickupTime}</p>
       </div>
 
       <div className="gap-2 border p-2">

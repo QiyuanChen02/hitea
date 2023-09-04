@@ -14,9 +14,7 @@ const PageWrapper: React.FC<PageWrapperType> = ({ children }) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Navbar />
-      <main className="relative flex h-[calc(100vh-80px)] flex-col items-center md:h-[calc(100vh-96px)]">
-        {children}
-      </main>
+      <main className="relative flex flex-col items-center">{children}</main>
     </>
   );
 };

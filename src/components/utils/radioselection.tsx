@@ -38,7 +38,7 @@ const RadioSelection: React.FC<RadioSelectionType> = ({
   return (
     <>
       {options.map((option) => (
-        <div key={type}>
+        <div key={type + option}>
           <input
             type="radio"
             value={option}

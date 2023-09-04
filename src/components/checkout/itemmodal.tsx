@@ -15,15 +15,10 @@ type ItemModalType = {
 };
 
 const ItemModal: React.FC<ItemModalType> = ({ item }) => {
-  const { id, name, description, image, price } = item;
+  const { id, name, description, image, price, ...initialOrder } = item;
   const { updateOrder, deleteItem } = useCartStore();
 
-  const [order, setOrder] = useState({
-    size: item.size,
-    ice: item.ice,
-    sweetness: item.sweetness,
-    quantity: item.quantity,
-  });
+  const [order, setOrder] = useState(initialOrder);
 
   const changeOrder = <T extends OrderOptions>(
     key: T,

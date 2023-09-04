@@ -17,6 +17,5 @@ export const isAdminEmail = (email: string | null | undefined) =>
 /** Returns whether or not the user is an admin */
 export const useAdmin = () => {
   const { data: sessionData, status } = useSession();
-  useConsole(sessionData?.user?.email, "sessionData?.user?.email");
   return [isAdminEmail(sessionData?.user?.email), status] as const;
 };

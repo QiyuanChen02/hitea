@@ -28,7 +28,7 @@ type OrderDetailsType = {
 
 const OrderDetails: React.FC<OrderDetailsType> = ({ order, changeOrder }) => {
   return (
-    <div className="flex w-full flex-col items-start gap-3 p-2 md:w-1/2">
+    <div className="flex w-full flex-col items-start gap-3">
       <h2 className="text-xl">Choice of Size</h2>
 
       <RadioSelection
@@ -64,6 +64,14 @@ const OrderDetails: React.FC<OrderDetailsType> = ({ order, changeOrder }) => {
         <option value={3}>3</option>
         <option value={4}>4</option>
       </select>
+
+      <h2 className="text-xl">Special Instructions</h2>
+      <textarea
+        value={order.specialInstructions}
+        onChange={(e) => changeOrder("specialInstructions", e.target.value)}
+        className="w-full resize-none rounded-md bg-gray-100 p-2"
+        placeholder="Add a note here."
+      />
     </div>
   );
 };

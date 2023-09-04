@@ -1,6 +1,5 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { useConsole } from "~/hooks/utils/useConsole";
 import { useCartStore } from "~/hooks/zustand/useCart";
 dayjs.extend(customParseFormat);
 

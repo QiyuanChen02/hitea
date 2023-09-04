@@ -1,8 +1,7 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import ItemSummary from "~/components/checkout/itemsummary";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import ActionButton from "../utils/actionbutton";
-import { useRouter } from "next/router";
 
 const OrderSummary: React.FC = () => {
   const { items } = useCartStore();

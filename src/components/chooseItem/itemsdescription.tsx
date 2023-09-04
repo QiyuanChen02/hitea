@@ -1,15 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
-import {
-  IceType,
-  OrderType,
-  SizeType,
-  SweetnessType,
-  type TeaType,
-} from "~/utils/milkTeaData";
+import type { OrderType, TeaType } from "~/utils/milkTeaData";
 import ActionButton from "../utils/actionbutton";
-import RadioSelection from "../utils/radioselection";
 import OrderDetails from "../utils/orderdetails";
 
 const defaultOrder: OrderType = {

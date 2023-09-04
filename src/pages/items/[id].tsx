@@ -2,9 +2,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import ItemsDescription from "~/components/chooseItem/itemsdescription";
 import PageWrapper from "~/components/utils/pagewrapper";
-import { milkTeaData, type TeaType } from "~/utils/milkTeaData";
-
-export type ParsedItemType = TeaType & { quantity: number };
+import { milkTeaData } from "~/utils/milkTeaData";
 
 export default function Items() {
   const router = useRouter();
@@ -27,6 +25,7 @@ export default function Items() {
             className="object-contain"
           />
         </figure>
+
         <ItemsDescription {...item} />
       </div>
     </PageWrapper>

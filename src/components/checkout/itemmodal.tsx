@@ -2,24 +2,40 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import { useModalStore } from "~/hooks/zustand/useModal";
-import { type ParsedItemType } from "~/pages/items/[id]";
 import IconButton from "../utils/iconbutton";
 import Modal from "../utils/modal";
 import ActionButton from "../utils/actionbutton";
+import { type ParsedItemType } from "~/utils/milkTeaData";
+import RadioSelection from "../utils/radioselection";
+import OrderDetails from "../utils/orderdetails";
+import { OrderOptions } from "../chooseItem/itemsdescription";
 
 type ItemModalType = {
   item: ParsedItemType;
 };
 
 const ItemModal: React.FC<ItemModalType> = ({ item }) => {
-  const { id, name, description, image, price, quantity } = item;
-  const { updateQuantity, deleteItem } = useCartStore();
-  const [newQuantity, setNewQuantity] = useState(quantity);
+  const { id, name, description, image, price } = item;
+  const { updateOrder, deleteItem } = useCartStore();
+
+  const [order, setOrder] = useState({
+    size: item.size,
+    ice: item.ice,
+    sweetness: item.sweetness,
+    quantity: item.quantity,
+  });
+
+  const changeOrder = <T extends OrderOptions>(
+    key: T,
+    value: T extends "quantity" ? number : string
+  ) => {
+    setOrder((order) => ({ ...order, [key]: value }));
+  };
 
   const { hideModal } = useModalStore();
 
   const onUpdate = () => {
-    updateQuantity(id, newQuantity);
+    updateOrder(id, order);
     hideModal(id);
   };
 
@@ -33,46 +49,19 @@ const ItemModal: React.FC<ItemModalType> = ({ item }) => {
           className="object-contain"
         />
       </figure>
-      <div className="flex w-full flex-col items-start gap-3 p-2">
+      <div className="flex w-full flex-col items-start gap-3 overflow-y-scroll  p-2">
         <h1 className="text-3xl">{name}</h1>
         <p className="text-lg">£{(price / 100).toFixed(2)}</p>
         <p className="text-xl">{description}</p>
+
+        <OrderDetails order={order} changeOrder={changeOrder} />
+        <ActionButton onClick={() => onUpdate()}>
+          Update Order |{" £"}
+          {((price * order.quantity) / 100).toFixed(2)}
+        </ActionButton>
         <button className="text-red-500" onClick={() => deleteItem(id)}>
           Delete Order
         </button>
-        <div className="flex items-center gap-3">
-          <IconButton
-            imageSrc="icons/minus.svg"
-            altText="minus"
-            width={24}
-            height={24}
-            spacing={8}
-            extraClasses="bg-gray-300 rounded-full"
-            onClick={() =>
-              setNewQuantity((updatedQuantity) =>
-                Math.max(updatedQuantity - 1, 1)
-              )
-            }
-          />
-          <p>{newQuantity}</p>
-          <IconButton
-            imageSrc="icons/plus.svg"
-            altText="minus"
-            width={24}
-            height={24}
-            spacing={8}
-            extraClasses="bg-gray-300 rounded-full"
-            onClick={() =>
-              setNewQuantity((updatedQuantity) =>
-                Math.min(updatedQuantity + 1, 4)
-              )
-            }
-          />
-          <ActionButton onClick={() => onUpdate()}>
-            Update Order |{" £"}
-            {((price * newQuantity) / 100).toFixed(2)}
-          </ActionButton>
-        </div>
       </div>
     </Modal>
   );

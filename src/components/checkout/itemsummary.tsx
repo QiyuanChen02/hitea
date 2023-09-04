@@ -1,7 +1,7 @@
 import Image from "next/image";
-import { useDomLoaded } from "~/hooks/utils/useDomLoaded";
 import { useModalStore } from "~/hooks/zustand/useModal";
-import { type ParsedItemType } from "~/pages/items/[id]";
+
+import { type ParsedItemType } from "~/utils/milkTeaData";
 import ItemModal from "./itemmodal";
 
 type ItemSummaryType = {

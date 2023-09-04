@@ -1,8 +1,26 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
-import { type TeaType } from "~/utils/milkTeaData";
+import {
+  IceType,
+  OrderType,
+  SizeType,
+  SweetnessType,
+  type TeaType,
+} from "~/utils/milkTeaData";
 import ActionButton from "../utils/actionbutton";
+import RadioSelection from "../utils/radioselection";
+import OrderDetails from "../utils/orderdetails";
+
+const defaultOrder: OrderType = {
+  quantity: 1,
+  size: "normal",
+  sweetness: "1",
+  ice: "normal",
+  specialInstructions: "",
+};
+
+export type OrderOptions = keyof typeof defaultOrder;
 
 const ItemsDescription: React.FC<TeaType> = ({
   id,
@@ -13,7 +31,15 @@ const ItemsDescription: React.FC<TeaType> = ({
 }) => {
   const { items, addItem, increaseQuantity } = useCartStore();
   const router = useRouter();
-  const [selectedOption, setSelectedOption] = useState(1);
+
+  const [order, setOrder] = useState(defaultOrder);
+
+  const changeOrder = <T extends OrderOptions>(
+    key: T,
+    value: T extends "quantity" ? number : string
+  ) => {
+    setOrder((order) => ({ ...order, [key]: value }));
+  };
 
   const onCheckout = async () => {
     if (!items.find((item) => item.id === id)) {
@@ -23,10 +49,10 @@ const ItemsDescription: React.FC<TeaType> = ({
         price,
         description,
         image,
-        quantity: selectedOption,
+        ...order,
       });
     } else {
-      increaseQuantity(id, selectedOption);
+      increaseQuantity(id, order.quantity);
     }
     await router.push("/checkout");
   };
@@ -36,19 +62,10 @@ const ItemsDescription: React.FC<TeaType> = ({
       <h1 className="text-3xl">{name}</h1>
       <p className="text-lg">£{(price / 100).toFixed(2)}</p>
       <p>{description}</p>
-      <select
-        value={selectedOption}
-        onChange={(e) => setSelectedOption(parseInt(e.target.value))}
-        className="rounded-full bg-gray-300 px-4 py-2"
-      >
-        <option value={1}>1</option>
-        <option value={2}>2</option>
-        <option value={3}>3</option>
-        <option value={4}>4</option>
-      </select>
+      <OrderDetails order={order} changeOrder={changeOrder} />
       <ActionButton onClick={() => void onCheckout()}>
-        Add {selectedOption} to order |{" £"}
-        {((price * selectedOption) / 100).toFixed(2)}
+        Add {order.quantity} to order |{" £"}
+        {((price * order.quantity) / 100).toFixed(2)}
       </ActionButton>
     </div>
   );

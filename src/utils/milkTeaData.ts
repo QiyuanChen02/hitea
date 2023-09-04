@@ -8,6 +8,20 @@ export type TeaType = {
 
 export type TeasType = TeaType[];
 
+export type SizeType = "normal" | "large";
+export type IceType = "normal" | "half" | "none";
+export type SweetnessType = "1" | "0.7" | "0.5" | "0.3";
+
+export type OrderType = {
+  quantity: number;
+  size?: SizeType;
+  ice?: IceType;
+  sweetness?: SweetnessType;
+  specialInstructions?: string;
+};
+
+export type ParsedItemType = TeaType & OrderType;
+
 export type MilkTeaCategoryType = {
   type:
     | "Classic Milk Tea"
@@ -77,7 +91,7 @@ export const milkTeaData: MilkTeaDataType = [
     ],
   },
   {
-    type: "Frappe",
+    type: "Frappe", // only type to not have normal and large sizes
     teas: [
       {
         id: 8,

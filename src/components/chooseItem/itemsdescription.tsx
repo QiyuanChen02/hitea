@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import type { OrderType, TeaType } from "~/utils/milkTeaData";
 import ActionButton from "../utils/actionbutton";
-import OrderDetails from "../utils/orderdetails";
+import OrderDetailSelection from "../utils/orderdetailselection";
 
 const defaultOrder: OrderType = {
   quantity: 1,
@@ -55,7 +55,7 @@ const ItemsDescription: React.FC<TeaType> = ({
       <h1 className="text-3xl">{name}</h1>
       <p className="text-lg">£{(price / 100).toFixed(2)}</p>
       <p>{description}</p>
-      <OrderDetails order={order} changeOrder={changeOrder} />
+      <OrderDetailSelection order={order} changeOrder={changeOrder} />
       <ActionButton onClick={() => void onCheckout()}>
         Add {order.quantity} to order |{" £"}
         {((price * order.quantity) / 100).toFixed(2)}

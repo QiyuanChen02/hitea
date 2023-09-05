@@ -44,11 +44,14 @@ const Navbar = () => {
           extraClasses="rounded-full hover:brightness-110 w-12 h-12 md:w-16 md:h-16"
         />
         <div className="hidden gap-6 md:flex">
-          <Link href="/about">
-            <p className="font-medium hover:text-gray-700">About</p>
+          <Link href="/">
+            <p className="font-medium hover:text-gray-700">Menu</p>
           </Link>
           <Link href="/myorders">
             <p className="font-medium hover:text-gray-700">My Orders</p>
+          </Link>
+          <Link href="/about">
+            <p className="font-medium hover:text-gray-700">About</p>
           </Link>
           {isAdmin && (
             <Link href="/admin">
@@ -77,9 +80,9 @@ const Navbar = () => {
             <>
               <button
                 className="p-3 font-medium hover:bg-gray-100"
-                onClick={() => goToPage("/about")}
+                onClick={() => goToPage("/")}
               >
-                About
+                Menu
               </button>
               <button
                 className="p-3 font-medium hover:bg-gray-100"
@@ -95,6 +98,12 @@ const Navbar = () => {
                   Admin Page
                 </button>
               )}
+              <button
+                className="p-3 font-medium hover:bg-gray-100"
+                onClick={() => goToPage("/about")}
+              >
+                About
+              </button>
               <button
                 className="p-3 font-medium hover:bg-gray-100"
                 onClick={() => void signOut()}

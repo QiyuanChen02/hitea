@@ -1,0 +1,90 @@
+import { RouterOutputs, api } from "~/utils/api";
+import { ParsedItemType } from "~/utils/milkTeaData";
+import ActionButton from "./actionbutton";
+
+export type OrderSummaryType = RouterOutputs["orders"]["getOrders"][number] & {
+  isAdminPage?: boolean;
+};
+
+const OrderSummary: React.FC<OrderSummaryType> = ({
+  items,
+  id,
+  finished,
+  pickupTime,
+  isAdminPage = false,
+}) => {
+  const parsedItems = JSON.parse(items) as ParsedItemType[];
+  const finishOrder = api.orders.finishOrder.useMutation();
+
+  const utils = api.useContext();
+
+  const onFinishOrder = () => {
+    finishOrder.mutate(
+      { id },
+      { onSuccess: () => void utils.orders.getOrders.invalidate() }
+    );
+  };
+  return (
+    <div className="flex w-full flex-col gap-4 border p-6 shadow-xl">
+      <div className="flex items-center justify-between text-right">
+        <h2 className="mr-3 text-2xl">{id.slice(0, 10)}</h2>
+        {isAdminPage ? (
+          finished ? (
+            <p className="text-sm">Complete</p>
+          ) : (
+            <p className="text-sm">Picking up at {pickupTime}</p>
+          )
+        ) : finished ? (
+          <p className="text-sm">
+            Order Complete! Pickup your order at the shop now.
+          </p>
+        ) : (
+          <p className="text-sm">In Progress... Complete at {pickupTime}</p>
+        )}
+      </div>
+
+      <div className="flex flex-col gap-4">
+        {parsedItems.map((item) => (
+          <Item key={item.id} item={item} />
+        ))}
+      </div>
+
+      {isAdminPage && (
+        <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>
+          Finish Order
+        </ActionButton>
+      )}
+    </div>
+  );
+};
+
+type ItemType = {
+  item: ParsedItemType;
+};
+
+const Item: React.FC<ItemType> = ({ item }) => {
+  return (
+    <div className="flex flex-col">
+      <div className="flex gap-2">
+        <p>{item.quantity}&times;</p>
+        <h3 className="text-lg">{item.name}</h3>
+      </div>
+      <ul className="flex list-disc flex-col">
+        <li className="ml-4 text-sm text-gray-600">
+          Choice of Size: {item.size}
+        </li>
+        <li className="ml-4 text-sm text-gray-600">
+          Choice of Ice: {item.ice}
+        </li>
+        <li className="ml-4 text-sm text-gray-600">
+          Choice of Sweetness: {item.sweetness}
+        </li>
+        <li className="ml-4 text-sm text-gray-600">
+          Special Instructions: {item.specialInstructions || "none"}
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+export default OrderSummary;

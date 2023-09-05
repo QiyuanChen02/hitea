@@ -7,7 +7,7 @@ import Modal from "../utils/modal";
 import ActionButton from "../utils/actionbutton";
 import { type ParsedItemType } from "~/utils/milkTeaData";
 import RadioSelection from "../utils/radioselection";
-import OrderDetails from "../utils/orderdetails";
+import OrderDetailSelection from "../utils/orderdetailselection";
 import { OrderOptions } from "../chooseItem/itemsdescription";
 
 type ItemModalType = {
@@ -49,7 +49,7 @@ const ItemModal: React.FC<ItemModalType> = ({ item }) => {
         <p className="text-lg">£{(price / 100).toFixed(2)}</p>
         <p className="text-xl">{description}</p>
 
-        <OrderDetails order={order} changeOrder={changeOrder} />
+        <OrderDetailSelection order={order} changeOrder={changeOrder} />
         <ActionButton onClick={() => onUpdate()}>
           Update Order |{" £"}
           {((price * order.quantity) / 100).toFixed(2)}

@@ -3,7 +3,7 @@ import ItemSummary from "~/components/checkout/itemsummary";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import ActionButton from "../utils/actionbutton";
 
-const OrderSummary: React.FC = () => {
+const OrderInfo: React.FC = () => {
   const { items } = useCartStore();
   const router = useRouter();
 
@@ -36,4 +36,4 @@ const OrderSummary: React.FC = () => {
   );
 };
 
-export default OrderSummary;
+export default OrderInfo;

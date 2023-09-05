@@ -1,14 +1,4 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { useCartStore } from "~/hooks/zustand/useCart";
-import {
-  IceType,
-  OrderType,
-  SizeType,
-  SweetnessType,
-  type TeaType,
-} from "~/utils/milkTeaData";
-import ActionButton from "./actionbutton";
+import { OrderType } from "~/utils/milkTeaData";
 import RadioSelection, { ChangeOrderType } from "./radioselection";
 
 const defaultOrder: OrderType = {
@@ -21,12 +11,15 @@ const defaultOrder: OrderType = {
 
 export type OrderOptions = keyof typeof defaultOrder;
 
-type OrderDetailsType = {
+type OrderDetailSelectionType = {
   order: OrderType;
   changeOrder: ChangeOrderType;
 };
 
-const OrderDetails: React.FC<OrderDetailsType> = ({ order, changeOrder }) => {
+const OrderDetailSelection: React.FC<OrderDetailSelectionType> = ({
+  order,
+  changeOrder,
+}) => {
   return (
     <div className="flex w-full flex-col items-start gap-3">
       <h2 className="text-xl">Choice of Size</h2>
@@ -76,4 +69,4 @@ const OrderDetails: React.FC<OrderDetailsType> = ({ order, changeOrder }) => {
   );
 };
 
-export default OrderDetails;
+export default OrderDetailSelection;

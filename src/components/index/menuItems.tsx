@@ -51,6 +51,7 @@ const MenuItem: React.FC<TeaType> = ({
           fill
           priority // todo: remove this for items under the fold
           sizes="250px"
+          className="object-cover"
         />
       </figure>
       <p className="my-1 font-semibold">{description}</p>

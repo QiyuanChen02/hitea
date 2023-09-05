@@ -15,6 +15,7 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
 }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
   const finishOrder = api.orders.finishOrder.useMutation();
+  const deleteOrder = api.orders.deleteOrder.useMutation();
 
   const utils = api.useContext();
 
@@ -24,6 +25,14 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
       { onSuccess: () => void utils.orders.getOrders.invalidate() }
     );
   };
+
+  const onDeleteOrder = () => {
+    deleteOrder.mutate(
+      { id },
+      { onSuccess: () => void utils.orders.getOrders.invalidate() }
+    );
+  };
+
   return (
     <div className="flex w-full flex-col gap-4 border p-6 shadow-xl">
       <div className="flex items-center justify-between text-right">
@@ -52,6 +61,12 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
       {isAdminPage && (
         <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>
           Finish Order
+        </ActionButton>
+      )}
+
+      {!isAdminPage && finished && (
+        <ActionButton bgColour="bg-green-500" onClick={onDeleteOrder}>
+          Confirm Collection
         </ActionButton>
       )}
     </div>

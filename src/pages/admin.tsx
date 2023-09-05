@@ -1,14 +1,13 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import ActionButton from "~/components/utils/actionbutton";
+import OrderSummary from "~/components/utils/ordersummary";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
-import { api, type RouterOutputs } from "~/utils/api";
-import ActionButton from "~/components/utils/actionbutton";
-import { ParsedItemType } from "~/utils/milkTeaData";
-import OrderSummary from "~/components/utils/ordersummary";
+import { api } from "~/utils/api";
 
 export default function Admin() {
-  const [isAdmin, status] = useAdmin();
+  const [isAdmin, adminStatus] = useAdmin();
 
   const router = useRouter();
   const { type } = router.query;
@@ -20,7 +19,8 @@ export default function Admin() {
     }
   );
 
-  if (!orders) return <p>Loading...</p>;
+  if (!orders || adminStatus === "loading")
+    return <PageWrapper>Loading...</PageWrapper>;
   return (
     <PageWrapper>
       {!isAdmin ? (

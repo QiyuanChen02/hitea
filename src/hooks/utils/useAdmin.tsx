@@ -1,5 +1,4 @@
 import { useSession } from "next-auth/react";
-import { useConsole } from "./useConsole";
 
 /** Current admins. */
 const adminEmails: string[] = [

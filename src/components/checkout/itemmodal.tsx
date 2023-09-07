@@ -2,13 +2,11 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import { useModalStore } from "~/hooks/zustand/useModal";
-import IconButton from "../utils/iconbutton";
-import Modal from "../utils/modal";
-import ActionButton from "../utils/actionbutton";
 import { type ParsedItemType } from "~/utils/milkTeaData";
-import RadioSelection from "../utils/radioselection";
+import { type OrderOptions } from "../chooseItem/itemsdescription";
+import ActionButton from "../utils/actionbutton";
+import Modal from "../utils/modal";
 import OrderDetailSelection from "../utils/orderdetailselection";
-import { OrderOptions } from "../chooseItem/itemsdescription";
 
 type ItemModalType = {
   item: ParsedItemType;

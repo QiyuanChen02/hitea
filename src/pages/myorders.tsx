@@ -1,9 +1,6 @@
+import OrderSummary from "~/components/utils/ordersummary";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { api } from "~/utils/api";
-import { type ParsedItemType } from "~/utils/milkTeaData";
-import OrderSummary, {
-  OrderSummaryType,
-} from "~/components/utils/ordersummary";
 
 export default function MyOrders() {
   const { data: userOrders } = api.orders.findOrderByUser.useQuery(undefined, {

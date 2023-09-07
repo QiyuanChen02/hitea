@@ -1,6 +1,4 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { type ParsedItemType } from "~/pages/items/[id]";
 
 export type ModalsDataType = {
   checkoutUpdateModals: string[];

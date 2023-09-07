@@ -143,7 +143,7 @@ export const milkTeaData: MilkTeaDataType = [
       {
         id: 14,
         name: "Mango and Passion Fruit Tea with Popping Boba",
-        image: "mangoPassionFruitTea.jpeg",
+        image: "mango&PassionFruitTea.jpeg",
         price: 450,
         description: "Mango and Passion Fruit Tea with Popping Boba",
       },

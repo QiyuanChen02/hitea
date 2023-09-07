@@ -1,5 +1,5 @@
-import { OrderType } from "~/utils/milkTeaData";
-import RadioSelection, { ChangeOrderType } from "./radioselection";
+import { type OrderType } from "~/utils/milkTeaData";
+import RadioSelection, { type ChangeOrderType } from "./radioselection";
 
 const defaultOrder: OrderType = {
   quantity: 1,

@@ -1,4 +1,4 @@
-import { type ModalsDataType, useModalStore } from "~/hooks/zustand/useModal";
+import { useModalStore } from "~/hooks/zustand/useModal";
 import IconButton from "../utils/iconbutton";
 
 type ModalType = {

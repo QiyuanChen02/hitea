@@ -1,7 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { type ChangeOrderType } from "~/components/utils/radioselection";
-import { OrderType, type ParsedItemType } from "~/utils/milkTeaData";
+import type { OrderType, ParsedItemType } from "~/utils/milkTeaData";
 
 type CartStoreType = {
   items: ParsedItemType[];

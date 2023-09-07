@@ -7,7 +7,10 @@ const OrderInfo: React.FC = () => {
   const { items } = useCartStore();
   const router = useRouter();
 
-  const totalCost = items.reduce((acc, item) => acc + item.price, 0);
+  const totalCost = items.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
   return (
     <div className="mt-4 flex w-full flex-col">
       <div className="flex w-full justify-between">

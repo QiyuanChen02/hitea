@@ -47,16 +47,21 @@ const Navbar = () => {
           <Link href="/">
             <p className="font-medium hover:text-gray-700">Menu</p>
           </Link>
-          <Link href="/myorders">
-            <p className="font-medium hover:text-gray-700">My Orders</p>
-          </Link>
-          <Link href="/about">
-            <p className="font-medium hover:text-gray-700">About</p>
-          </Link>
-          {isAdmin && (
-            <Link href="/admin">
-              <p className="font-medium hover:text-gray-700">Admin</p>
-            </Link>
+          {status === "authenticated" ? (
+            <>
+              <Link href="/myorders">
+                <p className="font-medium hover:text-gray-700">My Orders</p>
+              </Link>
+              {isAdmin && (
+                <Link href="/admin">
+                  <p className="font-medium hover:text-gray-700">Admin</p>
+                </Link>
+              )}
+            </>
+          ) : (
+            <button onClick={() => void signIn("auth0")}>
+              <p className="font-medium hover:text-gray-700">Login</p>
+            </button>
           )}
         </div>
         <div className="flex gap-1">
@@ -98,12 +103,6 @@ const Navbar = () => {
                   Admin Page
                 </button>
               )}
-              <button
-                className="p-3 font-medium hover:bg-gray-100"
-                onClick={() => goToPage("/about")}
-              >
-                About
-              </button>
               <button
                 className="p-3 font-medium hover:bg-gray-100"
                 onClick={() => void signOut()}

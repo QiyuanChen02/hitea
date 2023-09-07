@@ -21,11 +21,10 @@ const ItemSummary: React.FC<ItemSummaryType> = ({ item }) => {
         <div className="flex items-center gap-2">
           <figure className="relative flex h-24 w-24">
             <Image
-              className="center"
+              className="object-cover"
               src={`/hiteadrinks/${image}`}
               alt={name}
-              width={96}
-              height={96}
+              fill
             />
             <div className="absolute right-2 top-2 h-5 w-5 rounded-full border bg-pink-200">
               <p className="translate-y-[-4px] text-center">{quantity}</p>

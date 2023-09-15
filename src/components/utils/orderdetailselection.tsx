@@ -3,6 +3,7 @@ import RadioSelection, { type ChangeOrderType } from "./radioselection";
 
 const defaultOrder: OrderType = {
   quantity: 1,
+  extraPrice: 0,
   size: "normal",
   sweetness: "1",
   ice: "normal",

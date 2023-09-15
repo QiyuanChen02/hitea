@@ -34,7 +34,7 @@ const Category: React.FC<MilkTeaCategoryType> = ({ type, teas }) => {
 const MenuItem: React.FC<TeaType> = ({
   id,
   name,
-  price,
+  initialPrice,
   description,
   image,
 }) => {
@@ -55,7 +55,7 @@ const MenuItem: React.FC<TeaType> = ({
         />
       </figure>
       <p className="my-1 font-semibold">{description}</p>
-      <p className="text-sm">£{(price / 100).toFixed(2)}</p>
+      <p className="text-sm">£{(initialPrice / 100).toFixed(2)}</p>
     </div>
   );
 };

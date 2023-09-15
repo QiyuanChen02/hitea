@@ -7,6 +7,7 @@ import OrderDetailSelection from "../utils/orderdetailselection";
 
 const defaultOrder: OrderType = {
   quantity: 1,
+  extraPrice: 0,
   size: "normal",
   sweetness: "1",
   ice: "normal",
@@ -18,7 +19,7 @@ export type OrderOptions = keyof typeof defaultOrder;
 const ItemsDescription: React.FC<TeaType> = ({
   id,
   name,
-  price,
+  initialPrice,
   description,
   image,
 }) => {
@@ -29,7 +30,7 @@ const ItemsDescription: React.FC<TeaType> = ({
 
   const changeOrder = <T extends OrderOptions>(
     key: T,
-    value: T extends "quantity" ? number : string
+    value: T extends "quantity" | "extraPrice" ? number : string
   ) => {
     setOrder((order) => ({ ...order, [key]: value }));
   };
@@ -39,7 +40,7 @@ const ItemsDescription: React.FC<TeaType> = ({
       addItem({
         id,
         name,
-        price,
+        initialPrice,
         description,
         image,
         ...order,
@@ -53,12 +54,14 @@ const ItemsDescription: React.FC<TeaType> = ({
   return (
     <div className="flex w-full flex-col items-start gap-3 p-2 md:w-1/2">
       <h1 className="text-3xl">{name}</h1>
-      <p className="text-lg">£{(price / 100).toFixed(2)}</p>
+      <p className="text-lg">£{(initialPrice / 100).toFixed(2)}</p>
       <p>{description}</p>
       <OrderDetailSelection order={order} changeOrder={changeOrder} />
       <ActionButton onClick={() => void onCheckout()}>
         Add {order.quantity} to order |{" £"}
-        {((price * order.quantity) / 100).toFixed(2)}
+        {(((initialPrice + order.extraPrice) * order.quantity) / 100).toFixed(
+          2
+        )}
       </ActionButton>
     </div>
   );

@@ -8,7 +8,7 @@ import { type OrderOptions } from "../chooseItem/itemsdescription";
 
 export type ChangeOrderType = <T extends OrderOptions>(
   key: T,
-  value: T extends "quantity" ? number : string
+  value: T extends "quantity" | "extraPrice" ? number : string
 ) => void;
 
 type RadioSelectionType = {
@@ -35,6 +35,12 @@ const RadioSelection: React.FC<RadioSelectionType> = ({
   type,
   options,
 }) => {
+  const onChangeOrder = (option: SizeType | SweetnessType | IceType) => {
+    changeOrder(type, option);
+    if (type === "size") {
+      changeOrder("extraPrice", option === "large" ? 100 : 0);
+    }
+  };
   return (
     <>
       {options.map((option) => (
@@ -45,9 +51,11 @@ const RadioSelection: React.FC<RadioSelectionType> = ({
             name={type}
             id={type + option}
             checked={order[type] === option}
-            onChange={() => changeOrder(type, option)}
+            onChange={() => onChangeOrder(option)}
           />{" "}
-          <label htmlFor={type + option}>{option}</label>
+          <label htmlFor={type + option}>
+            {option === "large" ? "large (+£1.00)" : option}
+          </label>
         </div>
       ))}
     </>

@@ -13,14 +13,14 @@ type ItemModalType = {
 };
 
 const ItemModal: React.FC<ItemModalType> = ({ item }) => {
-  const { id, name, description, image, price, ...initialOrder } = item;
+  const { id, name, description, image, initialPrice, ...initialOrder } = item;
   const { updateOrder, deleteItem } = useCartStore();
 
   const [order, setOrder] = useState(initialOrder);
 
   const changeOrder = <T extends OrderOptions>(
     key: T,
-    value: T extends "quantity" ? number : string
+    value: T extends "quantity" | "extraPrice" ? number : string
   ) => {
     setOrder((order) => ({ ...order, [key]: value }));
   };
@@ -44,13 +44,17 @@ const ItemModal: React.FC<ItemModalType> = ({ item }) => {
       </figure>
       <div className="flex w-full flex-col items-start gap-3 overflow-y-scroll  p-2">
         <h1 className="text-3xl">{name}</h1>
-        <p className="text-lg">£{(price / 100).toFixed(2)}</p>
+        <p className="text-lg">
+          £{((initialPrice + order.extraPrice) / 100).toFixed(2)}
+        </p>
         <p className="text-xl">{description}</p>
 
         <OrderDetailSelection order={order} changeOrder={changeOrder} />
         <ActionButton onClick={() => onUpdate()}>
           Update Order |{" £"}
-          {((price * order.quantity) / 100).toFixed(2)}
+          {(((initialPrice + order.extraPrice) * order.quantity) / 100).toFixed(
+            2
+          )}
         </ActionButton>
         <button className="text-red-500" onClick={() => deleteItem(id)}>
           Delete Order

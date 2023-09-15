@@ -9,7 +9,7 @@ type ItemSummaryType = {
 };
 
 const ItemSummary: React.FC<ItemSummaryType> = ({ item }) => {
-  const { image, name, quantity, price } = item;
+  const { image, name, quantity, initialPrice, extraPrice } = item;
   const { showModal, checkoutUpdateModals } = useModalStore();
 
   return (
@@ -33,7 +33,7 @@ const ItemSummary: React.FC<ItemSummaryType> = ({ item }) => {
           <p>{name}</p>
         </div>
         <p className="w-16 font-bold">
-          £{((quantity * price) / 100).toFixed(2)}
+          £{((quantity * (initialPrice + extraPrice)) / 100).toFixed(2)}
         </p>
       </div>
       {checkoutUpdateModals.includes(item.id.toString()) && (

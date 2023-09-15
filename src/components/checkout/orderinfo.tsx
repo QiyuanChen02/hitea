@@ -8,7 +8,7 @@ const OrderInfo: React.FC = () => {
   const router = useRouter();
 
   const totalCost = items.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + (item.initialPrice + item.extraPrice) * item.quantity,
     0
   );
   return (

@@ -36,7 +36,7 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
   return (
     <div className="flex w-full flex-col gap-4 border p-6 shadow-xl">
       <div className="flex items-center justify-between text-right">
-        <h2 className="mr-3 text-2xl">Order Id: {id.slice(0, 10)}</h2>
+        <h2 className="mr-3 text-2xl">Order Id: {(id % 100) + 100}</h2>
         {isAdminPage ? (
           finished ? (
             <p className="text-sm">Complete</p>

@@ -1,12 +1,12 @@
 import type {
+  HasTeaType,
   IceType,
   OrderType,
   SizeType,
   SweetnessType,
 } from "~/utils/milkTeaData";
-import { type OrderOptions } from "../chooseItem/itemsdescription";
 
-export type ChangeOrderType = <T extends OrderOptions>(
+export type ChangeOrderType = <T extends keyof OrderType>(
   key: T,
   value: T extends "quantity" | "extraPrice" ? number : string
 ) => void;
@@ -26,6 +26,10 @@ type RadioSelectionType = {
   | {
       type: "ice";
       options: IceType[];
+    }
+  | {
+      type: "hasTea";
+      options: HasTeaType[];
     }
 );
 

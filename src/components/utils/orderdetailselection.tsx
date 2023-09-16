@@ -1,17 +1,6 @@
 import { type OrderType } from "~/utils/milkTeaData";
 import RadioSelection, { type ChangeOrderType } from "./radioselection";
 
-const defaultOrder: OrderType = {
-  quantity: 1,
-  extraPrice: 0,
-  size: "normal",
-  sweetness: "1",
-  ice: "normal",
-  specialInstructions: "",
-};
-
-export type OrderOptions = keyof typeof defaultOrder;
-
 type OrderDetailSelectionType = {
   order: OrderType;
   changeOrder: ChangeOrderType;
@@ -47,6 +36,18 @@ const OrderDetailSelection: React.FC<OrderDetailSelectionType> = ({
         type="sweetness"
         options={["1", "0.7", "0.5", "0.3"]}
       />
+
+      {order.hasTea && (
+        <>
+          <h2 className="text-xl">Choice of Tea</h2>
+          <RadioSelection
+            order={order}
+            changeOrder={changeOrder}
+            type="hasTea"
+            options={["With Green Tea", "No Green Tea"]}
+          />
+        </>
+      )}
 
       <select
         value={order.quantity}

@@ -5,17 +5,6 @@ import type { OrderType, TeaType } from "~/utils/milkTeaData";
 import ActionButton from "../utils/actionbutton";
 import OrderDetailSelection from "../utils/orderdetailselection";
 
-const defaultOrder: OrderType = {
-  quantity: 1,
-  extraPrice: 0,
-  size: "normal",
-  sweetness: "1",
-  ice: "normal",
-  specialInstructions: "",
-};
-
-export type OrderOptions = keyof typeof defaultOrder;
-
 const ItemsDescription: React.FC<TeaType> = ({
   id,
   name,
@@ -26,9 +15,17 @@ const ItemsDescription: React.FC<TeaType> = ({
   const { items, addItem, increaseQuantity } = useCartStore();
   const router = useRouter();
 
-  const [order, setOrder] = useState(defaultOrder);
+  const [order, setOrder] = useState<OrderType>({
+    quantity: 1,
+    extraPrice: 0,
+    size: "normal",
+    sweetness: "1",
+    ice: "normal",
+    specialInstructions: "",
+    hasTea: Math.floor(id / 100) === 2 ? "With Green Tea" : undefined,
+  });
 
-  const changeOrder = <T extends OrderOptions>(
+  const changeOrder = <T extends keyof OrderType>(
     key: T,
     value: T extends "quantity" | "extraPrice" ? number : string
   ) => {

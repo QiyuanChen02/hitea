@@ -11,6 +11,7 @@ export type TeasType = TeaType[];
 export type SizeType = "normal" | "large";
 export type IceType = "normal" | "half" | "none";
 export type SweetnessType = "1" | "0.7" | "0.5" | "0.3";
+export type HasTeaType = "With Green Tea" | "No Green Tea";
 
 export type OrderType = {
   quantity: number;
@@ -18,6 +19,7 @@ export type OrderType = {
   size?: SizeType;
   ice?: IceType;
   sweetness?: SweetnessType;
+  hasTea?: HasTeaType;
   specialInstructions?: string;
 };
 
@@ -95,42 +97,42 @@ export const milkTeaData: MilkTeaDataType = [
     type: "Frappe", // only type to not have normal and large sizes
     teas: [
       {
-        id: 8,
+        id: 101,
         name: "Oreo Bobashake Frappe",
         image: "oreoBobashakeFrappe.png",
         initialPrice: 450,
         description: "Oreo Boboshake Frappe",
       },
       {
-        id: 9,
+        id: 102,
         name: "Japanese Matcha Frappe",
         image: "japaneseMatchaFrappe.png",
         initialPrice: 450,
         description: "Japanese Matcha Frappe",
       },
       {
-        id: 10,
+        id: 103,
         name: "Lotus Boboshake Frappe",
         image: "lotusBobashakeFrappe.jpeg",
         initialPrice: 450,
         description: "Lotus Boboshake Frappe",
       },
       {
-        id: 11,
+        id: 104,
         name: "Strawberry Yogurt Frappe",
         image: "strawberryYogurtFrappe.png",
         initialPrice: 450,
         description: "Strawberry Yogurt Frappe",
       },
       {
-        id: 12,
+        id: 105,
         name: "Blueberry Yogurt Frappe",
         image: "blueberryYoghurtFrappe.jpeg",
         initialPrice: 450,
         description: "Blueberry Yogurt Frappe",
       },
       {
-        id: 13,
+        id: 106,
         name: "Mango Yogurt Frappe",
         image: "mangoYogurtFrappe.jpeg",
         initialPrice: 450,
@@ -142,42 +144,42 @@ export const milkTeaData: MilkTeaDataType = [
     type: "Mixed Fruit Tea",
     teas: [
       {
-        id: 14,
+        id: 201,
         name: "Mango and Passion Fruit Tea with Popping Boba",
         image: "mango&PassionFruitTea.jpeg",
         initialPrice: 450,
         description: "Mango and Passion Fruit Tea with Popping Boba",
       },
       {
-        id: 15,
+        id: 202,
         name: "Strawberry and Peach Fruit Tea with Popping Boba",
         image: "strawberryPeachFruitTea.jpeg",
         initialPrice: 450,
         description: "Strawberry and Peach Fruit Tea with Popping Boba",
       },
       {
-        id: 16,
+        id: 203,
         name: "Lychee Ice Green Tea with Popping Boba",
         image: "lycheeIceGreenTea.jpeg",
         initialPrice: 450,
         description: "Lychee Ice Green Tea with Popping Boba",
       },
       {
-        id: 17,
+        id: 204,
         name: "Jumbo Mixed Fruit Green Tea",
         image: "jumboMixedFruitGreenTea.jpeg",
         initialPrice: 550,
         description: "Jumbo Mixed Fruit Green Tea",
       },
       {
-        id: 18,
+        id: 205,
         name: "Kiwi Fruit Green Tea with Popping Boba",
         image: "kiwiFruitGreenTea.jpeg",
         initialPrice: 450,
         description: "Kiwi Fruit Green Tea with Popping Boba",
       },
       {
-        id: 19,
+        id: 206,
         name: "Passion Fruit Green Tea with Popping Boba",
         image: "passionFruitGreenTea.jpeg",
         initialPrice: 450,
@@ -189,35 +191,35 @@ export const milkTeaData: MilkTeaDataType = [
     type: "Creamy Cheese Tea",
     teas: [
       {
-        id: 20,
+        id: 301,
         name: "Mango and Passion Fruit Cheese Tea Macchiato",
         image: "mango&PassionFruitCheeseTea.jpeg",
         initialPrice: 499,
         description: "Mango and Passion Fruit Cheese Tea Macchiato",
       },
       {
-        id: 21,
+        id: 302,
         name: "Strawberry & Peach Cheese Tea Macchiato",
         image: "strawberry&PeachCheeseTea.png",
         initialPrice: 499,
         description: "Strawberry & Peach Cheese Tea Macchiato",
       },
       {
-        id: 22,
+        id: 303,
         name: "Black Grape Cheese Tea Macchiato",
         image: "blackGrapeCheeseTea.png",
         initialPrice: 499,
         description: "Black Grape Cheese Tea Macchiato",
       },
       {
-        id: 23,
+        id: 304,
         name: "Strawberry Cheese Tea Macchiato",
         image: "strawberryCheeseTea.png",
         initialPrice: 499,
         description: "Strawberry Cheese Tea Macchiato",
       },
       {
-        id: 24,
+        id: 305,
         name: "Peach Cheese Tea Macchiato",
         image: "peachCheeseTea.png",
         initialPrice: 499,
@@ -229,21 +231,21 @@ export const milkTeaData: MilkTeaDataType = [
     type: "Coffee",
     teas: [
       {
-        id: 25,
+        id: 401,
         name: "Milk Coffee with Brown Sugar Pearls",
         image: "milkCoffee.jpeg",
         initialPrice: 350,
         description: "Milk Coffee with Brown Sugar Pearls",
       },
       {
-        id: 26,
+        id: 402,
         name: "Coconut Latte with Coffee Jellies",
         image: "coconutLatte.jpeg",
         initialPrice: 450,
         description: "Coconut Latte with Coffee Jellies",
       },
       {
-        id: 27,
+        id: 403,
         name: "Black Coffee With Jasmine Tea Cheese Macchiato",
         image: "blackCoffeeWithJasmine.png",
         initialPrice: 499,
@@ -255,14 +257,14 @@ export const milkTeaData: MilkTeaDataType = [
     type: "Fizzy Boba",
     teas: [
       {
-        id: 28,
+        id: 501,
         name: "Blueberry Lemon Fizzy Bubble",
         image: "blueberryLemonFizzy.jpeg",
         initialPrice: 350,
         description: "Blueberry Lemon Fizzy Bubble",
       },
       {
-        id: 29,
+        id: 502,
         name: "Strawberry Lemon Fizzy Bubble",
         image: "strawberryLemonFizzy.jpeg",
         initialPrice: 350,

@@ -98,6 +98,11 @@ const Item: React.FC<ItemType> = ({ item }) => {
         <li className="ml-4 text-sm text-gray-600">
           Choice of Sweetness: {item.sweetness}
         </li>
+        {item.hasTea && (
+          <li className="ml-4 text-sm text-gray-600">
+            Choice of Tea: {item.hasTea}
+          </li>
+        )}
         <li className="ml-4 text-sm text-gray-600">
           Special Instructions: {item.specialInstructions || "none"}
         </li>

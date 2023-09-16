@@ -2,8 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import { useModalStore } from "~/hooks/zustand/useModal";
-import { type ParsedItemType } from "~/utils/milkTeaData";
-import { type OrderOptions } from "../chooseItem/itemsdescription";
+import type { OrderType, ParsedItemType } from "~/utils/milkTeaData";
 import ActionButton from "../utils/actionbutton";
 import Modal from "../utils/modal";
 import OrderDetailSelection from "../utils/orderdetailselection";
@@ -18,7 +17,7 @@ const ItemModal: React.FC<ItemModalType> = ({ item }) => {
 
   const [order, setOrder] = useState(initialOrder);
 
-  const changeOrder = <T extends OrderOptions>(
+  const changeOrder = <T extends keyof OrderType>(
     key: T,
     value: T extends "quantity" | "extraPrice" ? number : string
   ) => {

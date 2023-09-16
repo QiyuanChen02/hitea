@@ -11,7 +11,7 @@ export default function Checkout() {
       {domLoaded && (
         <div className="flex w-full flex-col items-center gap-4 p-5 md:w-3/4 lg:w-1/2">
           <OrderInfo />
-          <PickupTime />
+          {/* <PickupTime /> */}
           <ConfirmOrder />
         </div>
       )}

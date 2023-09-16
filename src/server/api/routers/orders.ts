@@ -4,7 +4,7 @@ import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
 
 export const ordersRouter = createTRPCRouter({
   addOrder: protectedProcedure
-    .input(z.object({ items: z.string(), pickupTime: z.string() }))
+    .input(z.object({ items: z.string(), pickupTime: z.string().optional() }))
     .mutation(async ({ input, ctx }) => {
       return prisma.order.create({
         data: {

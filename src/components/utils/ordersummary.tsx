@@ -10,10 +10,13 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
   items,
   id,
   finished,
-  pickupTime,
   isAdminPage = false,
 }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
+  const totalCost = parsedItems.reduce(
+    (acc, item) => acc + (item.initialPrice + item.extraPrice) * item.quantity,
+    0
+  );
   const finishOrder = api.orders.finishOrder.useMutation();
   const deleteOrder = api.orders.deleteOrder.useMutation();
 
@@ -37,7 +40,7 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
     <div className="flex w-full flex-col gap-4 border p-6 shadow-xl">
       <div className="flex items-center justify-between text-right">
         <h2 className="mr-3 text-2xl">Order Id: {(id % 100) + 100}</h2>
-        {isAdminPage ? (
+        {/* {isAdminPage ? (
           finished ? (
             <p className="text-sm">Complete</p>
           ) : (
@@ -49,7 +52,8 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
           </p>
         ) : (
           <p className="text-sm">In Progress... Complete at {pickupTime}</p>
-        )}
+        )} */}
+        <p className="text-xl">£{(totalCost / 100).toFixed(2)}</p>
       </div>
 
       <div className="flex flex-col gap-4">

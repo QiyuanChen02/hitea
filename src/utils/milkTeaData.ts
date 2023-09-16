@@ -192,7 +192,7 @@ export const milkTeaData: MilkTeaDataType = [
         id: 20,
         name: "Mango and Passion Fruit Cheese Tea Macchiato",
         image: "mango&PassionFruitCheeseTea.jpeg",
-        initialPrice: 450,
+        initialPrice: 499,
         description: "Mango and Passion Fruit Cheese Tea Macchiato",
       },
       {

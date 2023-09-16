@@ -39,7 +39,9 @@ const RadioSelection: React.FC<RadioSelectionType> = ({
   type,
   options,
 }) => {
-  const onChangeOrder = (option: SizeType | SweetnessType | IceType) => {
+  const onChangeOrder = (
+    option: SizeType | SweetnessType | IceType | HasTeaType
+  ) => {
     changeOrder(type, option);
     if (type === "size") {
       changeOrder("extraPrice", option === "large" ? 100 : 0);

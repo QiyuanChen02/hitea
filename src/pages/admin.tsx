@@ -1,6 +1,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import ActionButton from "~/components/utils/actionbutton";
+import { LoadingSpinner } from "~/components/utils/loading";
 import OrderSummary from "~/components/utils/ordersummary";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
@@ -20,7 +21,11 @@ export default function Admin() {
   );
 
   if (!orders || adminStatus === "loading")
-    return <PageWrapper>Loading...</PageWrapper>;
+    return (
+      <PageWrapper>
+        <LoadingSpinner />
+      </PageWrapper>
+    );
   return (
     <PageWrapper>
       {!isAdmin ? (

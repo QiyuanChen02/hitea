@@ -1,3 +1,4 @@
+import { LoadingSpinner } from "~/components/utils/loading";
 import OrderSummary from "~/components/utils/ordersummary";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { api } from "~/utils/api";
@@ -7,7 +8,12 @@ export default function MyOrders() {
     refetchInterval: 6000,
   });
 
-  if (!userOrders) return <PageWrapper>Loading...</PageWrapper>;
+  if (!userOrders)
+    return (
+      <PageWrapper>
+        <LoadingSpinner />
+      </PageWrapper>
+    );
 
   return (
     <PageWrapper>

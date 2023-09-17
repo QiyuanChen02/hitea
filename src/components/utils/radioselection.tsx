@@ -14,6 +14,7 @@ export type ChangeOrderType = <T extends keyof OrderType>(
 type RadioSelectionType = {
   order: OrderType;
   changeOrder: ChangeOrderType;
+  title: string;
 } & (
   | {
       type: "size";
@@ -38,6 +39,7 @@ const RadioSelection: React.FC<RadioSelectionType> = ({
   changeOrder,
   type,
   options,
+  title,
 }) => {
   const onChangeOrder = (
     option: SizeType | SweetnessType | IceType | HasTeaType
@@ -49,6 +51,7 @@ const RadioSelection: React.FC<RadioSelectionType> = ({
   };
   return (
     <>
+      <h2 className="text-xl">{title}</h2>
       {options.map((option) => (
         <div key={type + option}>
           <input

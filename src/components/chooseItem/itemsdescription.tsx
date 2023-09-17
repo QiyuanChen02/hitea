@@ -4,6 +4,7 @@ import { useCartStore } from "~/hooks/zustand/useCart";
 import type { OrderType, TeaType } from "~/utils/milkTeaData";
 import ActionButton from "../utils/actionbutton";
 import OrderDetailSelection from "../utils/orderdetailselection";
+import { getInitialOrder } from "~/utils/getInitialOrder";
 
 const ItemsDescription: React.FC<TeaType> = ({
   id,
@@ -15,15 +16,7 @@ const ItemsDescription: React.FC<TeaType> = ({
   const { items, addItem, increaseQuantity } = useCartStore();
   const router = useRouter();
 
-  const [order, setOrder] = useState<OrderType>({
-    quantity: 1,
-    extraPrice: 0,
-    size: "medium",
-    sweetness: "1",
-    ice: "normal",
-    specialInstructions: "",
-    hasTea: Math.floor(id / 100) === 2 ? "With Green Tea" : undefined,
-  });
+  const [order, setOrder] = useState(getInitialOrder(id));
 
   const changeOrder = <T extends keyof OrderType>(
     key: T,

@@ -12,41 +12,44 @@ const OrderDetailSelection: React.FC<OrderDetailSelectionType> = ({
 }) => {
   return (
     <div className="flex w-full flex-col items-start gap-3">
-      <h2 className="text-xl">Choice of Size</h2>
+      {order.size && (
+        <RadioSelection
+          title="Choice of Size"
+          order={order}
+          changeOrder={changeOrder}
+          type="size"
+          options={["large", "medium"]}
+        />
+      )}
 
-      <RadioSelection
-        order={order}
-        changeOrder={changeOrder}
-        type="size"
-        options={["large", "medium"]}
-      />
+      {order.ice && (
+        <RadioSelection
+          title="Choice of Ice"
+          order={order}
+          changeOrder={changeOrder}
+          type="ice"
+          options={["normal", "half", "none"]}
+        />
+      )}
 
-      <h2 className="text-xl">Choice of Ice</h2>
-      <RadioSelection
-        order={order}
-        changeOrder={changeOrder}
-        type="ice"
-        options={["normal", "half", "none"]}
-      />
-
-      <h2 className="text-xl">Choice of Sweetness</h2>
-      <RadioSelection
-        order={order}
-        changeOrder={changeOrder}
-        type="sweetness"
-        options={["1", "0.7", "0.5", "0.3"]}
-      />
+      {order.sweetness && (
+        <RadioSelection
+          title="Choice of Sweetness"
+          order={order}
+          changeOrder={changeOrder}
+          type="sweetness"
+          options={["1", "0.7", "0.5", "0.3"]}
+        />
+      )}
 
       {order.hasTea && (
-        <>
-          <h2 className="text-xl">Choice of Tea</h2>
-          <RadioSelection
-            order={order}
-            changeOrder={changeOrder}
-            type="hasTea"
-            options={["With Green Tea", "No Green Tea"]}
-          />
-        </>
+        <RadioSelection
+          title="Choice of Tea"
+          order={order}
+          changeOrder={changeOrder}
+          type="hasTea"
+          options={["With Green Tea", "No Green Tea"]}
+        />
       )}
 
       <select

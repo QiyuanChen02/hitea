@@ -18,7 +18,7 @@ const ItemsDescription: React.FC<TeaType> = ({
   const [order, setOrder] = useState<OrderType>({
     quantity: 1,
     extraPrice: 0,
-    size: "normal",
+    size: "medium",
     sweetness: "1",
     ice: "normal",
     specialInstructions: "",

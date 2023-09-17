@@ -18,7 +18,7 @@ const OrderDetailSelection: React.FC<OrderDetailSelectionType> = ({
         order={order}
         changeOrder={changeOrder}
         type="size"
-        options={["large", "normal"]}
+        options={["large", "medium"]}
       />
 
       <h2 className="text-xl">Choice of Ice</h2>
@@ -65,7 +65,7 @@ const OrderDetailSelection: React.FC<OrderDetailSelectionType> = ({
         value={order.specialInstructions}
         onChange={(e) => changeOrder("specialInstructions", e.target.value)}
         className="w-full resize-none rounded-md bg-gray-100 p-2"
-        placeholder="Add a note here."
+        placeholder="Add requests here. Any requests may cost extra."
       />
     </div>
   );

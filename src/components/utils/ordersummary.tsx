@@ -69,9 +69,15 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
         <p>No pickup time specified</p>
       )}
 
-      {isAdminPage && (
+      {isAdminPage && !finished && (
         <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>
           Finish Order
+        </ActionButton>
+      )}
+
+      {isAdminPage && finished && (
+        <ActionButton bgColour="bg-red-500" onClick={onDeleteOrder}>
+          Delete Order
         </ActionButton>
       )}
 

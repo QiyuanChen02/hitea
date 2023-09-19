@@ -4,19 +4,19 @@ import { useCartStore } from "~/hooks/zustand/useCart";
 dayjs.extend(customParseFormat);
 
 const times = [
-  "3:00",
-  "3:10",
-  "3:20",
-  "3:30",
-  "3:40",
-  "3:50",
-  "4:00",
-  "4:10",
-  "4:20",
-  "4:30",
-  "4:40",
-  "4:50",
-  "5:00",
+  "12:00",
+  "12:30",
+  "13:00",
+  "13:30",
+  "14:00",
+  "14:30",
+  "15:00",
+  "15:30",
+  "16:00",
+  "16:30",
+  "17:00",
+  "17:30",
+  "18:00",
 ].map((time) => dayjs(`${time} pm`, "h:mm a"));
 
 const PickupTime: React.FC = () => {

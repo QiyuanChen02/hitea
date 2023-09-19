@@ -10,6 +10,7 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
   items,
   id,
   finished,
+  pickupTime,
   isAdminPage = false,
 }) => {
   const parsedItems = JSON.parse(items) as ParsedItemType[];
@@ -61,6 +62,12 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
           <Item key={item.id} item={item} />
         ))}
       </div>
+
+      {pickupTime ? (
+        <p>Collect at {pickupTime}</p>
+      ) : (
+        <p>No pickup time specified</p>
+      )}
 
       {isAdminPage && (
         <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>

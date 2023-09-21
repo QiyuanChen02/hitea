@@ -14,8 +14,8 @@ const ConfirmOrder: React.FC = () => {
   const onCheckout = async () => {
     if (!session) {
       await signIn("auth0");
-    } else if (!pickupTime) {
-      alert("Please select a pickup time");
+      // } else if (!pickupTime) {
+      //   alert("Please select a pickup time");
     } else if (items.length === 0) {
       alert("Please add items to your cart");
     } else {

@@ -63,11 +63,7 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
         ))}
       </div>
 
-      {pickupTime ? (
-        <p>Collect at {pickupTime}</p>
-      ) : (
-        <p>No pickup time specified</p>
-      )}
+      {pickupTime ? <p>Collect at {pickupTime}</p> : <p>Eating In</p>}
 
       {isAdminPage && !finished && (
         <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>
@@ -102,15 +98,21 @@ const Item: React.FC<ItemType> = ({ item }) => {
         <h3 className="text-lg">{item.name}</h3>
       </div>
       <ul className="flex list-disc flex-col">
-        <li className="ml-4 text-sm text-gray-600">
-          Choice of Size: {item.size}
-        </li>
-        <li className="ml-4 text-sm text-gray-600">
-          Choice of Ice: {item.ice}
-        </li>
-        <li className="ml-4 text-sm text-gray-600">
-          Choice of Sweetness: {item.sweetness}
-        </li>
+        {item.size && (
+          <li className="ml-4 text-sm text-gray-600">
+            Choice of Size: {item.size}
+          </li>
+        )}
+        {item.ice && (
+          <li className="ml-4 text-sm text-gray-600">
+            Choice of Ice: {item.ice}
+          </li>
+        )}
+        {item.sweetness && (
+          <li className="ml-4 text-sm text-gray-600">
+            Choice of Sweetness: {item.sweetness}
+          </li>
+        )}
         {item.hasTea && (
           <li className="ml-4 text-sm text-gray-600">
             Choice of Tea: {item.hasTea}

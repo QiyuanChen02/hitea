@@ -25,7 +25,10 @@ const PickupTime: React.FC = () => {
     <div className="flex w-full flex-col">
       <div className="flex w-full flex-col justify-between gap-2">
         <h2 className="text-2xl">Pickup Time</h2>
-        <p>Please choose a suitable time for you to pickup your order: </p>
+        <p>
+          Please choose a suitable time for you to pickup your order (leave
+          blank if you&apos;re eating in):
+        </p>
         <div className="flex h-64 flex-col flex-wrap items-start gap-2 pt-2">
           {times.map((time, i) => (
             <PickupTimeButton key={i} time={time} />

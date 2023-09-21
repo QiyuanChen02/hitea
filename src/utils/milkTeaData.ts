@@ -33,7 +33,10 @@ export type MilkTeaCategoryType = {
     | "Creamy Cheese Tea"
     | "Mixed Fruit Tea"
     | "Fizzy Boba"
-    | "Coffee";
+    | "Coffee"
+    | "Soft Ice Cream"
+    | "Egg Waffles"
+    | "Bao Buns";
   teas: TeasType;
 };
 
@@ -349,4 +352,103 @@ export const milkTeaData: MilkTeaDataType = [
       },
     ],
   },
+  {
+    type: "Soft Ice Cream",
+    teas: [
+      {
+        id: 701,
+        name: "Brown Sugar Pearls Sundae",
+        image: "brownSugarPearlsSundae.jpeg",
+        initialPrice: 399,
+        description: "Brown Sugar Pearls Sundae",
+      },
+      {
+        id: 702,
+        name: "Oreo Sundae",
+        image: "oreoSundae.jpeg",
+        initialPrice: 299,
+        description: "Oreo Sundae",
+      },
+      {
+        id: 703,
+        name: "Lotus Biscoff Sundae",
+        image: "lotusBiscoffSundae.jpeg",
+        initialPrice: 299,
+        description: "Lotus Biscoff Sundae",
+      },
+      {
+        id: 704,
+        name: "Popping Boba Sundae",
+        image: "poppingBobaSundae.jpeg",
+        initialPrice: 399,
+        description: "Popping Boba Sundae",
+      },
+    ],
+  },
+  {
+    type: "Egg Waffles",
+    teas: [
+      {
+        id: 801,
+        name: "Original Egg Bubble Waffle",
+        image: "originalEggWaffle.jpeg",
+        initialPrice: 399,
+        description: "Original Egg Bubble Waffle",
+      },
+      {
+        id: 602,
+        name: "Brown Sugar Pearls Bubble Waffle",
+        image: "brownSugarPearlsWaffle.jpeg",
+        initialPrice: 499,
+        description: "Brown Sugar Pearls Bubble Waffle",
+      },
+    ],
+  },
+  // {
+  //   type: "Bao Buns",
+  //   teas: [
+  //     {
+  //       id: 901,
+  //       name: "Hoisin Duck Bao Buns x3",
+  //       image: "hoisinDuckBuns.jpeg",
+  //       initialPrice: 350,
+  //       description: "Hoisin Duck Bao Buns x3",
+  //     },
+  //     {
+  //       id: 902,
+  //       name: "Rabbit Custard Buns x3",
+  //       image: "rabbitCustardBuns.jpeg",
+  //       initialPrice: 350,
+  //       description: "Rabbit Custard Buns x3",
+  //     },
+  //     {
+  //       id: 903,
+  //       name: "Handmade Bao Buns with Mushroom Filling x3",
+  //       image: "handmadeBunsWithMushroomFilling.jpeg",
+  //       initialPrice: 350,
+  //       description: "Handmade Bao Buns with Mushroom Filling x3",
+  //     },
+  //     {
+  //       id: 904,
+  //       name: "New Orleans Chicken Thigh Big Bao Buns x3",
+  //       image: "newOrleansChickenThighBuns.jpeg",
+  //       initialPrice: 350,
+  //       description: "New Orleans Chicken Thigh Big Bao Buns x3",
+  //     },
+  //     {
+  //       id: 905,
+  //       name: "Big Handmade Bao Buns with Vegetable x3",
+  //       image: "handmadeBunsWithVegetable.jpeg",
+  //       initialPrice: 350,
+  //       description: "Big Handmade Bao Buns with Vegetable x3",
+  //     },
+  //     {
+  //       id: 906,
+  //       name: "Salted Egg Custard Buns x3",
+  //       image: "saltedEggCustardBuns.jpeg",
+  //       initialPrice: 350,
+  //       description: "Salted Egg Custard Buns x3",
+  //     },
+  //   ],
+  // },
 ];

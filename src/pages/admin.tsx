@@ -1,11 +1,22 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import ActionButton from "~/components/utils/actionbutton";
 import { LoadingSpinner } from "~/components/utils/loading";
 import OrderSummary from "~/components/utils/ordersummary";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
+import { useConsole } from "~/hooks/utils/useConsole";
 import { api } from "~/utils/api";
+
+async function playSound() {
+  const audio = new Audio("/notification.wav");
+  try {
+    await audio.play();
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 export default function Admin() {
   const [isAdmin, adminStatus] = useAdmin();
@@ -16,9 +27,22 @@ export default function Admin() {
   const { data: orders } = api.orders.getOrders.useQuery(
     { type: type === "complete" ? "complete" : "inprogress" },
     {
-      refetchInterval: 6000,
+      refetchInterval: 12000,
     }
   );
+
+  const [previousOrder, setPreviousOrder] = useState(orders);
+
+  useEffect(() => {
+    if (
+      type !== "complete" &&
+      orders &&
+      orders.length > (previousOrder?.length ?? 0)
+    ) {
+      setPreviousOrder(orders);
+      void playSound();
+    }
+  }, [orders, previousOrder, type]);
 
   if (!orders || adminStatus === "loading")
     return (
@@ -26,6 +50,7 @@ export default function Admin() {
         <LoadingSpinner />
       </PageWrapper>
     );
+
   return (
     <PageWrapper>
       {!isAdmin ? (

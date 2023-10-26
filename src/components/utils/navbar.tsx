@@ -15,7 +15,7 @@ const Navbar = () => {
   const { showDrawer, hideDrawer, drawerOpen } = useDrawerStore();
   const { status } = useSession();
   const domLoaded = useDomLoaded();
-  const isAdmin = useAdmin();
+  const [isAdmin] = useAdmin();
 
   const goToPage = (page: string) => {
     void router.push(page);

@@ -1,5 +1,4 @@
 import PageWrapper from "~/components/utils/pagewrapper";
-import { type RouterOutputs } from "~/utils/api";
 
 export default function Admin() {
   return (
@@ -11,5 +10,3 @@ export default function Admin() {
     </PageWrapper>
   );
 }
-
-export type OrderType = RouterOutputs["orders"]["getOrders"][number];

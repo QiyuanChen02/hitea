@@ -1,6 +1,7 @@
 import { type RouterOutputs, api } from "~/utils/api";
 import { type ParsedItemType } from "~/utils/milkTeaData";
 import ActionButton from "./actionbutton";
+import { pickupTimes } from "../checkout/pickuptime";
 
 export type OrderSummaryType = RouterOutputs["orders"]["getOrders"][number] & {
   isAdminPage?: boolean;
@@ -63,7 +64,11 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
         ))}
       </div>
 
-      {pickupTime ? <p>Collect at {pickupTime}</p> : <p>Eating In</p>}
+      {pickupTimes.includes(pickupTime) ? (
+        <p>Collect at {pickupTime}</p>
+      ) : (
+        <p>Eating In</p>
+      )}
 
       {isAdminPage && !finished && (
         <ActionButton bgColour="bg-green-500" onClick={onFinishOrder}>

@@ -6,7 +6,6 @@ import { LoadingSpinner } from "~/components/utils/loading";
 import OrderSummary from "~/components/utils/ordersummary";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useAdmin } from "~/hooks/utils/useAdmin";
-import { useConsole } from "~/hooks/utils/useConsole";
 import { api } from "~/utils/api";
 
 async function playSound() {
@@ -28,6 +27,7 @@ export default function Admin() {
     { type: type === "complete" ? "complete" : "inprogress" },
     {
       refetchInterval: 12000,
+      refetchIntervalInBackground: true,
     }
   );
 
@@ -41,6 +41,7 @@ export default function Admin() {
     ) {
       setPreviousOrder(orders);
       void playSound();
+      console.log("new order...");
     }
   }, [orders, previousOrder, type]);
 

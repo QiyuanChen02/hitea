@@ -5,6 +5,7 @@ const adminEmails: string[] = [
   "qiyuan.chen2002@gmail.com",
   "wwwindwing@gmail.com",
   "qiyuan.chen@univ.ox.ac.uk",
+  "emcheninnyelephant@gmail.com",
 ];
 
 // Uncomment this to test what the website looks like for non-admins

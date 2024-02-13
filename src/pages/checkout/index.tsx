@@ -1,6 +1,5 @@
 import ConfirmOrder from "~/components/checkout/confirmorder";
 import OrderInfo from "~/components/checkout/orderinfo";
-import PickupTime from "~/components/checkout/pickuptime";
 import PageWrapper from "~/components/utils/pagewrapper";
 import { useDomLoaded } from "~/hooks/utils/useDomLoaded";
 

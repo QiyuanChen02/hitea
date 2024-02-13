@@ -1,11 +1,11 @@
 import Image from "next/image";
+import PageWrapper from "./pagewrapper";
 
 type LoadingSpinnerType = {
   width?: number;
   height?: number;
 };
 
-// Generates loading spinner when loading
 export const LoadingSpinner: React.FC<LoadingSpinnerType> = ({
   width = 32,
   height = 32,
@@ -20,5 +20,13 @@ export const LoadingSpinner: React.FC<LoadingSpinnerType> = ({
         priority
       />
     </figure>
+  );
+};
+
+export const WrappedLoadingSpinner: React.FC<LoadingSpinnerType> = (props) => {
+  return (
+    <PageWrapper>
+      <LoadingSpinner {...props} />
+    </PageWrapper>
   );
 };

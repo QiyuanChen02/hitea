@@ -1,16 +1,21 @@
 import { z } from "zod";
 import { prisma } from "~/server/db";
-import { adminProcedure, createTRPCRouter, protectedProcedure } from "../trpc";
+import {
+  adminProcedure,
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "../trpc";
 
 export const ordersRouter = createTRPCRouter({
-  addOrder: protectedProcedure
+  addOrder: publicProcedure
     .input(z.object({ items: z.string(), pickupTime: z.string().optional() }))
     .mutation(async ({ input, ctx }) => {
       return prisma.order.create({
         data: {
           items: input.items,
           pickupTime: input.pickupTime,
-          userId: ctx.session.user.id,
+          userId: ctx.session?.user.id,
         },
       });
     }),
@@ -37,6 +42,13 @@ export const ordersRouter = createTRPCRouter({
     .input(z.object({ id: z.number() }))
     .mutation(async ({ input }) => {
       return prisma.order.delete({ where: { id: input.id } });
+    }),
+
+  findOrderById: publicProcedure
+    .input(z.object({ id: z.number().nullish() }))
+    .query(async ({ input }) => {
+      if (!input.id) return null;
+      return prisma.order.findUnique({ where: { id: input.id } });
     }),
 
   findOrderByUser: protectedProcedure.query(async ({ ctx }) => {

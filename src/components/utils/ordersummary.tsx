@@ -34,7 +34,12 @@ const OrderSummary: React.FC<OrderSummaryType> = ({
   const onDeleteOrder = () => {
     deleteOrder.mutate(
       { id },
-      { onSuccess: () => void utils.orders.getOrders.invalidate() }
+      {
+        onSuccess: () => {
+          void utils.orders.getOrders.invalidate();
+          void utils.orders.findOrderByUser.invalidate();
+        },
+      }
     );
   };
 

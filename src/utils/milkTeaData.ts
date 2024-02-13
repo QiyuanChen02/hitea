@@ -273,7 +273,7 @@ export const milkTeaData: MilkTeaDataType = [
       {
         id: 401,
         name: "Mango and Passion Fruit Smoothie with Cheese Foam",
-        image: "mango&PassionfruitCheeseTea.jpeg",
+        image: "mango&PassionFruitCheeseTea.jpeg",
         initialPrice: 499,
         description: "Mango and Passion Fruit Smoothie with Cheese Foam",
       },

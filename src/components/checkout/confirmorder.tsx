@@ -3,21 +3,19 @@ import { useRouter } from "next/router";
 import { useCartStore } from "~/hooks/zustand/useCart";
 import { api } from "~/utils/api";
 import ActionButton from "../utils/actionbutton";
+import { useOrderIdStore } from "~/hooks/zustand/useOrderId";
 
 const ConfirmOrder: React.FC = () => {
   const { items, clearItems, pickupTime, setPickupTime } = useCartStore();
+  const { setOrderId } = useOrderIdStore();
 
-  const { data: session } = useSession();
+  const { status } = useSession();
   const addOrder = api.orders.addOrder.useMutation();
   const router = useRouter();
 
-  const onCheckout = async () => {
-    if (!session) {
-      await signIn("google");
-      // } else if (!pickupTime) {
-      //   alert("Please select a pickup time");
-    } else if (items.length === 0) {
-      alert("Please add items to your cart");
+  const onCheckout = () => {
+    if (items.length === 0) {
+      alert("Please add some items to your cart");
     } else {
       addOrder.mutate(
         {
@@ -25,7 +23,8 @@ const ConfirmOrder: React.FC = () => {
           pickupTime: pickupTime ?? undefined,
         },
         {
-          onSuccess: () => {
+          onSuccess: (data) => {
+            setOrderId(data.id);
             clearItems();
             setPickupTime(null);
             void router.push("/checkout/success");
@@ -36,9 +35,22 @@ const ConfirmOrder: React.FC = () => {
   };
 
   return (
-    <ActionButton onClick={() => void onCheckout()}>
-      Confirm Checkout
-    </ActionButton>
+    <>
+      {status === "authenticated" ? (
+        <ActionButton onClick={() => void onCheckout()}>
+          Confirm Checkout
+        </ActionButton>
+      ) : (
+        <div className="flex gap-3">
+          <ActionButton onClick={() => void onCheckout()}>
+            Checkout as Guest
+          </ActionButton>
+          <ActionButton onClick={() => void signIn("google")}>
+            Sign In and Checkout
+          </ActionButton>
+        </div>
+      )}
+    </>
   );
 };
 

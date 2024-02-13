@@ -59,7 +59,7 @@ const Navbar = () => {
               )}
             </>
           ) : (
-            <button onClick={() => void signIn("auth0")}>
+            <button onClick={() => void signIn("google")}>
               <p className="font-medium hover:text-gray-700">Login</p>
             </button>
           )}
@@ -113,7 +113,7 @@ const Navbar = () => {
           ) : (
             <button
               className="p-3 font-medium hover:bg-gray-100"
-              onClick={() => void signIn("auth0")}
+              onClick={() => void signIn("google")}
             >
               Sign In
             </button>

@@ -55,7 +55,7 @@ export default function Admin() {
   return (
     <PageWrapper>
       {!isAdmin ? (
-        <a onClick={() => void signIn("auth0")}>
+        <a onClick={() => void signIn("google")}>
           Sign In With an admin account to access this page
         </a>
       ) : (

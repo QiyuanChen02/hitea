@@ -13,7 +13,7 @@ const ConfirmOrder: React.FC = () => {
 
   const onCheckout = async () => {
     if (!session) {
-      await signIn("auth0");
+      await signIn("google");
       // } else if (!pickupTime) {
       //   alert("Please select a pickup time");
     } else if (items.length === 0) {
